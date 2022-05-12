@@ -1,4 +1,4 @@
-name: Compile, test, depoly
+name: Test
 on: [ "push" ]
 jobs:
   step1:
