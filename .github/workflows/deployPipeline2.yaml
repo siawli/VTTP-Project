@@ -1,0 +1,30 @@
+name: Deploy to heroku
+on:
+  push:
+    tags:
+      - 'v*' #push if tag starts with v
+      - '!v*-alpha' #push tags that starts with v
+jobs:
+  deploy_to_heroku_upon_publish_of_release:
+    runs-on: ubuntu-latest
+    steps:
+    - name: get latest release with tag
+      id: latestrelease
+      run:
+        echo "::set-output name=releasetag::${curl -s "
+    - name: Checkout src
+      uses: actions/checkout@v2
+
+
+      steps:
+      - name: get latest release with tag
+        id: latestrelease
+        run: |
+          echo "::set-output name=releasetag::$(curl -s https://api.github.com/repos/weide-zhou/ticket13/releases/latest | jq '.tag_name' | sed 's/\"//g')"
+      - name: confirm release tag
+        run: |
+          echo ${{ steps.latestrelease.outputs.releasetag }}
+      - name: tagcheckout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ steps.latestrelease.outputs.releasetag }}
