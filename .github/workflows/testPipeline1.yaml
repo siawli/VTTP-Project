@@ -19,6 +19,8 @@ jobs:
       with:
         maven-version: 3.8.4
     - name: Run test
+      env:
+          SPRING_DATASOURCE_PASSWORD: ${{ secrets.spring_datasource_password }}
       run: mvn clean verify
     - name: Generate coverge badge
       uses: cicirello/jacoco-badge-generator@v2
