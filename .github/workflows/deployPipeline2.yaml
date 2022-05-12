@@ -18,7 +18,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         ref: ${{ steps.latestrelease.outputs.releasetag }}
-        - name: Deploy
+    - name: deploy
       uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
       with:
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
