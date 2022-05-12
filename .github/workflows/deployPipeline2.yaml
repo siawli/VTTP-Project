@@ -1,27 +1,9 @@
 name: Deploy to heroku
 on:
   push:
-    # Sequence of patterns matched against refs/tags
-    tags:
-      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+    release:
+      types: [published]
 jobs:
-  build:
-    name: Create Release
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GHTOKEN }} # This token is provided by Actions, you do not need to create your own token
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body:
-          draft: false
-          prerelease: false
   deploy_to_heroku_upon_publish_of_release:
     runs-on: ubuntu-latest
     steps:
@@ -42,3 +24,47 @@ jobs:
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
         heroku_app_name: "vttp-project-healthy" #Must be unique in Heroku
         heroku_email: ${{secrets.email}}
+# on:
+#   push:
+
+    # # Sequence of patterns matched against refs/tags
+    # tags:
+    #   - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+# jobs:
+  # build:
+  #   name: Create Release
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v2
+  #     - name: Create Release
+  #       id: create_release
+  #       uses: actions/create-release@v1
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GHTOKEN }} # This token is provided by Actions, you do not need to create your own token
+  #       with:
+  #         tag_name: ${{ github.ref }}
+  #         release_name: Release ${{ github.ref }}
+  #         body:
+  #         draft: false
+  #         prerelease: false
+  # deploy_to_heroku_upon_publish_of_release:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - name: get latest release with tag
+  #     id: latestrelease
+  #     run: |
+  #       echo "::set-output name=releasetag::$(curl -s https://api.github.com/repos/siawli/VTTP-Project/releases/latest | jq '.tag_name' | sed 's/\"//g')"
+  #   - name: confirm release tag
+  #     run: |
+  #       echo ${{ steps.latestrelease.outputs.releasetag }}
+  #   - name: tag checkout
+  #     uses: actions/checkout@v2
+  #     with:
+  #       ref: ${{ steps.latestrelease.outputs.releasetag }}
+  #   - name: deploy
+  #     uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+  #     with:
+  #       heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+  #       heroku_app_name: "vttp-project-healthy" #Must be unique in Heroku
+  #       heroku_email: ${{secrets.email}}
