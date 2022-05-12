@@ -36,7 +36,7 @@ jobs:
     - name: tag checkout
       uses: actions/checkout@v2
       with:
-        ref: Release ${{ github.ref }}
+        ref: ${{ github.ref }}
     - name: deploy
       uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
       with:
