@@ -33,10 +33,10 @@ jobs:
     # - name: confirm release tag
     #   run: |
     #     echo ${{ steps.latestrelease.outputs.releasetag }}
-    # - name: tag checkout
-    #   uses: actions/checkout@v2
-    #   with:
-    #     ref: ${{ steps.latestrelease.outputs.releasetag }}
+    - name: tag checkout
+      uses: actions/checkout@v2
+      with:
+        ref: Release ${{ github.ref }}
     - name: deploy
       uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
       with:
