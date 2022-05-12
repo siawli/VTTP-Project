@@ -1,5 +1,7 @@
 package MyFitnessJourney.VTTP.Project.Fitness.exercise.model;
 
+import org.springframework.util.MultiValueMap;
+
 public class ExcerciseSet {
 
     private String description;
@@ -37,6 +39,31 @@ public class ExcerciseSet {
     }
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public static Exercise createIndivEx(MultiValueMap<String, String> form) {
+        Exercise ex = new Exercise();
+
+        int i = 0;
+        while (i<=8) {
+            String description = form.getFirst("exercise-%d".formatted(i));
+            if ((description == null) || (description.trim().length()) == 0) {
+                i++;
+            } else {
+                String _count = form.getFirst("count-%d".formatted(i));
+                Float count = Float.parseFloat(_count);
+
+                ExcerciseSet indivExercise = new ExcerciseSet();
+                indivExercise.setCount(count);
+                indivExercise.setDescription(description);
+                indivExercise.setSetCount(Integer.parseInt(form.getFirst("setCount")));
+                indivExercise.setRestInterval(Float.parseFloat(form.getFirst("restInterval")));
+                ex.addIndividualEx(indivExercise);
+                i++;
+            }
+        }
+
+        return ex;
     }
 
 }

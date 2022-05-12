@@ -1,7 +1,11 @@
 package MyFitnessJourney.VTTP.Project.Fitness.exercise.model;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.springframework.util.MultiValueMap;
 
 public class Exercise {
 
@@ -51,4 +55,23 @@ public class Exercise {
     public void setUsername(String username) {
         this.username = username;
     }
+
+
+    public static Exercise createEx(Exercise ex, MultiValueMap<String, String> form, String usernameOri) {
+        ex.setCalories(Integer.parseInt(form.getFirst("calories")));
+        ex.setDate(form.getFirst("date"));
+        ex.setTitle(form.getFirst("title"));
+        ex.setUsername(usernameOri);
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+        LocalDateTime now = LocalDateTime.now();
+        ex.setTimestamp(now.toString());
+
+        //System.out.println("username: " + ex.getUsername());
+
+        // System.out.println(">>>> ex: " + ex.toString());
+        // System.out.println(">>> exList: " + ex.getIndividualEx().get(1).getDescription());
+        return ex;
+    }
+   
 }

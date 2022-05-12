@@ -19,6 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 import MyFitnessJourney.VTTP.Project.Fitness.exercise.model.ExcerciseSet;
 import MyFitnessJourney.VTTP.Project.Fitness.exercise.model.Exercise;
 
+import static MyFitnessJourney.VTTP.Project.Fitness.exercise.model.Exercise.*;
+import static MyFitnessJourney.VTTP.Project.Fitness.exercise.model.ExcerciseSet.*;
+
 @Controller
 @RequestMapping("/fitness")
 public class ExerciseController {
@@ -53,13 +56,8 @@ public class ExerciseController {
         //System.out.println("form: " + form.toString());
         ModelAndView mav = new ModelAndView();
 
-        Optional<Exercise> exOpt = createIndivEx(form);
-
-        if (exOpt.isEmpty()) {
-            return new ModelAndView("redirect:/fitness");
-        }
-        Exercise ex = exOpt.get();
-        ex = createEx(ex, form);        
+        Exercise ex = createIndivEx(form);
+        ex = createEx(ex, form, usernameOri);        
 
         try {
             exSvc.insertNewExercise(usernameOri, ex);
@@ -85,56 +83,7 @@ public class ExerciseController {
         mav.addObject("password", passwordOri);
         mav.setViewName("exerciseInTheDay");
 
-        
         return mav;
     }
-
-    private Optional<Exercise> createIndivEx(MultiValueMap<String, String> form) {
-
-        Exercise ex = new Exercise();
-
-        int i = 0;
-        while (i<=8) {
-            String description = form.getFirst("exercise-%d".formatted(i));
-            if ((description == null) || (description.trim().length()) == 0) {
-                i++;
-            } else {
-                String _count = form.getFirst("count-%d".formatted(i));
-                Float count = Float.parseFloat(_count);
-
-                ExcerciseSet indivExercise = new ExcerciseSet();
-                indivExercise.setCount(count);
-                indivExercise.setDescription(description);
-                indivExercise.setSetCount(Integer.parseInt(form.getFirst("setCount")));
-                indivExercise.setRestInterval(Float.parseFloat(form.getFirst("restInterval")));
-                ex.addIndividualEx(indivExercise);
-                i++;
-            }
-        }
-
-        if (ex.getIndividualEx().size() == 0) {
-            return Optional.empty();
-        } else {
-            return Optional.of(ex);
-        }
-    }
-
-    private Exercise createEx(Exercise ex, MultiValueMap<String, String> form) {
-        ex.setCalories(Integer.parseInt(form.getFirst("calories")));
-        ex.setDate(form.getFirst("date"));
-        ex.setTitle(form.getFirst("title"));
-        ex.setUsername(usernameOri);
-
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
-        LocalDateTime now = LocalDateTime.now();
-        ex.setTimestamp(now.toString());
-
-        //System.out.println("username: " + ex.getUsername());
-
-        // System.out.println(">>>> ex: " + ex.toString());
-        // System.out.println(">>> exList: " + ex.getIndividualEx().get(1).getDescription());
-        return ex;
-    }
-
 
 }
