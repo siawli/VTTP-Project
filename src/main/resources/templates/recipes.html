@@ -1,1 +1,23 @@
-Test
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipes</title>
+</head>
+<body>
+    <h1>Recipes</h1>
+
+    <div th:each="recipe : ${listRecipes}">
+
+        <h3><span th:text="${recipe.label}"></span></h3>
+        <img th:src="@{${recipe.image}}">
+        <p>Ingredients:</p>
+        <ol>
+            <li th:each="ingred : ${recipe.ingredientLines}" th:text="${ingred}"></li>
+        </ol>
+        
+    </div>
+</body>
+</html>
