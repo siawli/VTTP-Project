@@ -3,6 +3,8 @@ package MyFitnessJourney.VTTP.Project.Fitness.recipes;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -37,11 +39,13 @@ public class RecipesService {
         String[] mealTypesArr = null;
         // query = query.replace(" ", "%20");
         // System.out.println(">>>>> query: " + query);
-        UriComponentsBuilder urlB = UriComponentsBuilder.fromUriString(DEFAULT_URL)
+        UriComponentsBuilder urlB = UriComponentsBuilder
+                        .fromUriString(DEFAULT_URL)
                         .queryParam("q", query)
                         .queryParam("type", "public")
                         .queryParam("app_id", appId)
                         .queryParam("app_key", appKey);
+
 
         if (mealTypes != null) {
             mealTypesArr = mealTypes.split(",");
@@ -50,24 +54,39 @@ public class RecipesService {
             }
         }
 
+        System.out.println("calories: " + maxCalories.toString());
         if (maxCalories != 100000) {
+            System.out.println("trueeee");
             urlB.queryParam("calories", maxCalories.toString());
         }
 
         String url = urlB.toUriString();
-        System.out.println(">>>>> url + maxCal: " + url);
+        System.out.println(">>>>> url: " + url);
 
-        RequestEntity<Void> req = RequestEntity.get(url).accept(MediaType.APPLICATION_JSON).build();
-        RestTemplate template = new RestTemplate();
-        ResponseEntity<String> resp = template.exchange(req, String.class);
-        System.out.println(">>>> resp: " + resp.toString());
-        JsonObject data = getJsonObjFromResp(resp);
-        System.out.println(">>>>> data: " + data.toString());
+        // String url = "https://api.edamam.com/api/recipes/v2?q=chocolate%20brownie&type=public&app_id=0d2abaa4&app_key=041ecf38e812638aff96a58efd15ad85";
+
+        // RequestEntity<Void> req = RequestEntity.get(url).accept(MediaType.APPLICATION_JSON).build();
+        // RestTemplate template = new RestTemplate();
+        // ResponseEntity<String> resp = template.exchange(req, String.class);
+        //System.out.println(">>>> resp: " + resp.toString());
+        InputStream is = null;
+        try {
+            is = new URL(url).openStream();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        JsonReader reader = Json.createReader(is);
+        JsonObject data = reader.readObject();
+        // JsonObject data = getJsonObjFromResp(resp);
+        //System.out.println(">>>>> data: " + data.toString());
 
         List<RecipesModel> listOfRecipes = new LinkedList<>();
         
         JsonArray recipesArr = data.getJsonArray("hits");
-        System.out.println(">>>>>>> recipes: " + recipesArr.toString());
+        //System.out.println(">>>>>>> recipes: " + recipesArr.toString());
         for (JsonValue recipe : recipesArr) {
             RecipesModel indivRecipe = new RecipesModel();
             

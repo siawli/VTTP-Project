@@ -25,10 +25,13 @@ public class RecipesController {
 
     @GetMapping("/search")
     public ModelAndView searchRecipes(@RequestParam String query, 
-        @RequestParam(name = "MealTypes", required = false) String mealTypes,
-        @RequestParam(name="maxCalories", required = false, defaultValue = "100000") Integer maxCalories) {
+        @RequestParam(name = "mealTypes", required = false) String mealTypes,
+        @RequestParam(name="maxCalories", required = false, defaultValue = "100000000") Integer maxCalories) {
 
         ModelAndView mav = new ModelAndView();
+
+        System.out.println("controller mealTypes: " + mealTypes);
+        System.out.println("controller maxCalories: " + maxCalories);
 
         Optional<List<RecipesModel>> listOfRecipesOpt = 
             recipeSvc.getRecipes(query, mealTypes, maxCalories);
