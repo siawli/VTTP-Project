@@ -12,8 +12,8 @@
 
     <form method="POST" th:action="@{fitness/exercise}">
 
-        <input type="hidden" th:name="name" th:value="${username}">   
-        <input type="hidden" th:name="password" th:value="${password}">
+        <!-- <input type="hidden" th:name="name" th:value="${username}">   
+        <input type="hidden" th:name="password" th:value="${password}"> -->
 
 		<table>
 			<tr>
@@ -147,10 +147,6 @@
 				</tr>
             </tbody>
 		</table>
-
-        <div th:if="${errorMessage.length() > 0}">
-            <p><span th:text="${errorMessage}" style="color:red"></span></p>
-        </div>
 
         <table>
             <thead>

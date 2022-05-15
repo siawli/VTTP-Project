@@ -21,13 +21,11 @@
     </div>
     <h6>Total calories burnt for the day: <span th:text="${totalCalories}"></span></h6>
 
-    <form>
-        <input type="hidden" th:name="username" th:value="${username}">
-        <input type="hidden" th:name="password" th:value="${password}">    
+    <form> 
         <button type="submit" th:formmethod="post" th:formaction="@{/fitness}">
             Add another exercise!
         </button>
-        <button type="submit" th:formmethod="post" th:formaction="@{/home}">
+        <button type="submit" th:formmethod="get" th:formaction="@{/protected/home}">
             Home
         </button>
     </form>

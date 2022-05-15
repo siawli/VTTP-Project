@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -75,7 +77,8 @@ public class HealthyController {
     }
 
     @PostMapping("/home")
-    public ModelAndView homePage(@ModelAttribute UserModel user, @ModelAttribute("home") String home, @ModelAttribute("username") String name, @ModelAttribute("password") String password) {
+    public ModelAndView homePage(@ModelAttribute UserModel user, 
+        @ModelAttribute("home") String home, @ModelAttribute("username") String name, @ModelAttribute("password") String password, HttpSession sess) {
 
         ModelAndView mav = new ModelAndView();
 
@@ -83,35 +86,30 @@ public class HealthyController {
             Optional<UserModel> userOpt = userSvc.findUserByUsernameSvc(user);
             if (userOpt.isEmpty()) {
                 countLogin++;
-                return new ModelAndView("redirect:/login");
-            } 
+                mav = new ModelAndView("redirect:/login");
+            } else {
+                sess.setAttribute("username", name);
+                sess.setAttribute("password", password);
+                sess.setAttribute("user", user);
+                mav = new ModelAndView("redirect:/protected/home");
+            }
         } else if (home.equals("signUp")) {
             user.setBmi(user.getHeight(), user.getWeight());
             try {
                 userSvc.insertNewUserSvc(user);
             } catch (Exception ex) {
                 countSignUp++;
-                return new ModelAndView("redirect:/signUp");
+                mav = new ModelAndView("redirect:/signUp");
             }
         }
-        
-        user.setUsername(name);
-        user.setPassword(password);
-        user = userSvc.findUserByUsernameSvc(user).get();
-
-        mav.setViewName("homePage");
-        mav.addObject("username", name);
-        mav.addObject("password", password);
-        mav.addObject("bmi", user.getBmi());
-        mav.addObject("goals", user.getGoals());
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate date = LocalDate.now();
-        DayOfWeek day = date.getDayOfWeek();
-        date.format(formatter);
-        mav.addObject("date", day + " " + date);
 
         return mav;
+    }
+
+    @GetMapping("/logout")
+    public String getLogout(HttpSession sess) {
+        sess.invalidate();
+        return "index";
     }
 
 }
