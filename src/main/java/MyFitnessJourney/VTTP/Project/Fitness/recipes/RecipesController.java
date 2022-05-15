@@ -23,6 +23,11 @@ public class RecipesController {
         return "recipesSearch";
     }
 
+    @GetMapping
+    public String recipesFormError() {
+        return "recipesSearch";
+    }
+
     @GetMapping("/search")
     public ModelAndView searchRecipes(@RequestParam String query, 
         @RequestParam(name = "mealTypes", required = false) String mealTypes,

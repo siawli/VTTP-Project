@@ -6,7 +6,6 @@ import java.util.List;
 public class RecipesModel {
 
     private String label;
-    private List<String> cautions = new LinkedList<>();
     private List<String> ingredientLines = new LinkedList<>();
     private int calories;
     private String image;
@@ -16,15 +15,6 @@ public class RecipesModel {
     }
     public void setLabel(String label) {
         this.label = label;
-    }
-    public List<String> getCautions() {
-        return cautions;
-    }
-    public void setCautions(List<String> cautions) {
-        this.cautions = cautions;
-    }
-    public void addCautions(String caution) {
-        this.cautions.add(caution);
     }
     public List<String> getIngredientLines() {
         return ingredientLines;

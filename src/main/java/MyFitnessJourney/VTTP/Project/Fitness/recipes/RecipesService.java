@@ -37,8 +37,7 @@ public class RecipesService {
     public Optional<List<RecipesModel>> getRecipes(String query, String mealTypes, Integer maxCalories) {
 
         String[] mealTypesArr = null;
-        // query = query.replace(" ", "%20");
-        // System.out.println(">>>>> query: " + query);
+
         UriComponentsBuilder urlB = UriComponentsBuilder
                         .fromUriString(DEFAULT_URL)
                         .queryParam("q", query)
@@ -56,37 +55,31 @@ public class RecipesService {
 
         System.out.println("calories: " + maxCalories.toString());
         if (maxCalories != 100000) {
-            System.out.println("trueeee");
             urlB.queryParam("calories", maxCalories.toString());
         }
 
         String url = urlB.toUriString();
-        System.out.println(">>>>> url: " + url);
 
-        // String url = "https://api.edamam.com/api/recipes/v2?q=chocolate%20brownie&type=public&app_id=0d2abaa4&app_key=041ecf38e812638aff96a58efd15ad85";
-
-        // RequestEntity<Void> req = RequestEntity.get(url).accept(MediaType.APPLICATION_JSON).build();
-        // RestTemplate template = new RestTemplate();
-        // ResponseEntity<String> resp = template.exchange(req, String.class);
-        //System.out.println(">>>> resp: " + resp.toString());
+        /* 
+        String url = "https://api.edamam.com/api/recipes/v2?q=chocolate%20brownie&type=public&app_id=0d2abaa4&app_key=041ecf38e812638aff96a58efd15ad85";
+        RequestEntity<Void> req = RequestEntity.get(url).accept(MediaType.APPLICATION_JSON).build();
+        RestTemplate template = new RestTemplate();
+        ResponseEntity<String> resp = template.exchange(req, String.class);
+        This method not working for two words input due to inputStream error??? :(
+        */
         InputStream is = null;
         try {
             is = new URL(url).openStream();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
 
         JsonReader reader = Json.createReader(is);
         JsonObject data = reader.readObject();
-        // JsonObject data = getJsonObjFromResp(resp);
-        //System.out.println(">>>>> data: " + data.toString());
 
         List<RecipesModel> listOfRecipes = new LinkedList<>();
         
         JsonArray recipesArr = data.getJsonArray("hits");
-        //System.out.println(">>>>>>> recipes: " + recipesArr.toString());
         for (JsonValue recipe : recipesArr) {
             RecipesModel indivRecipe = new RecipesModel();
             
@@ -96,11 +89,6 @@ public class RecipesService {
             JsonObject imagesSizes = recipeDetails.getJsonObject("images");
             JsonObject imagesThumbnail = imagesSizes.getJsonObject("THUMBNAIL");
             indivRecipe.setImage(imagesThumbnail.getString("url"));
-
-            JsonArray cautionsArr = recipeDetails.getJsonArray("cautions");
-            for (JsonValue caution : cautionsArr) {
-                indivRecipe.addCautions(caution.toString());
-            }
 
             JsonArray ingredientLines = recipeDetails.getJsonArray("ingredientLines");
             for (JsonValue ingredientLine : ingredientLines) {
@@ -113,8 +101,6 @@ public class RecipesService {
             listOfRecipes.add(indivRecipe);
         }
 
-        System.out.println(">>>>> listSize: " + listOfRecipes.size());
-
         if (listOfRecipes.size() == 0) {
             return Optional.empty();
         }
@@ -123,6 +109,8 @@ public class RecipesService {
     }
 
 
+    /*
+    seems to have error here when used with ResponseEntity 
     private JsonObject getJsonObjFromResp(ResponseEntity<String> resp) {
         JsonObject data = null;
         try (InputStream is = new ByteArrayInputStream(resp.getBody().getBytes())) {
@@ -134,5 +122,6 @@ public class RecipesService {
         
         return data;
     }
+    */
     
 }
