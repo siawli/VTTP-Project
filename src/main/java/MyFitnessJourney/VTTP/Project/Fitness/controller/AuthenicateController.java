@@ -36,10 +36,6 @@ public class AuthenicateController {
         String username = (String)sess.getAttribute("username");
         String password = (String)sess.getAttribute("password");
 
-        System.out.println(">>>>> user: " + user.getUsername());
-        System.out.println(">>>>> password: " + password);
-
-
         user.setUsername(username);
         user.setPassword(password);
         user = userSvc.findUserByUsernameSvc(user).get();

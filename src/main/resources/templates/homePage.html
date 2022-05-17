@@ -4,26 +4,108 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Fitness Journey</title>
+    <title>Your Health Journey</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        .row {
+            margin: 0 auto;
+            margin-left: 2cm;
+            margin-right: 2cm;
+        }
+
+        .card {
+            margin-top: 0.5cm;
+            margin-bottom: 0.5cm;
+        }
+
+        .entire-form {
+            border: 1.5px solid black;
+            border-radius: 25px;
+            padding-top: 0.5cm;
+            margin-right: 1cm;
+            margin-left: 1cm;
+        }
+
+        .nav h1 {
+            text-align: center;
+            margin-left: 3.1cm;
+            padding-top: 0.3cm;
+            padding-bottom: 0.3cm;
+            /* border: 1px solid red; */
+        }
+
+        .nav {
+            /* border: 2px solid orange; */
+            position: fixed;
+            top: 0;
+            overflow: hidden;
+            width: 100%;
+            z-index: 2;
+            background-color: blanchedalmond;
+        }
+
+        .container {
+            margin-top: 85px;
+        }
+
+        .form {
+            /* border: 2px solid pink; */
+            float: right;
+            align-items: center;
+            margin-top: 0.4cm;
+            margin-bottom: 0.3cm;
+            margin-left: 4.7cm;
+
+        }
+
+        .navbar-text {
+                margin-left: 0.8cm;
+            padding-top: 1cm;   
+        }
+
+    </style>
 </head>
 <body>
-    <h1>Welcome <span th:text="${username}"></span></h1>
-    <h6>Date: <span th:text="${date}"></span></h6>
-    <h6>BMI: <span th:text="${#numbers.formatDecimal(bmi, 1, 'DEFAULT', 1, 'DEFAULT')}"></span></h6>
-     <!-- ${#numbers.formatDecimal(abc.value, 1, 'DEFAULT', 2, 'DEFAULT')} -->
-    <h6>Your goals: <span th:text="${goals}"></span></h6>
+    <div class="nav">
+        <h1 class="navbar-text"><strong>Healthy Living</strong></h1>
+        <h6 class="navbar-text">Date: <span th:text="${date}"></span></h6>
+        <h6 class="navbar-text">BMI: <span th:text="${#numbers.formatDecimal(bmi, 1, 'DEFAULT', 1, 'DEFAULT')}"></span></h6>
+        <!-- ${#numbers.formatDecimal(abc.value, 1, 'DEFAULT', 2, 'DEFAULT')} -->
+        <h6 class="navbar-text">Your goals: <span th:text="${goals}"></span></h6>
+        <form class="form">
+            <a href="/logout" class="btn btn-primary btn-lg">Logout</a>
+        </form>
+    </div>
 
-    <h2>What would you like to do today?</h2>
-
-    <form>
-        <!-- <input type="hidden" th:name="username" th:value="${username}">
-        <input type="hidden" th:name="password" th:value="${password}">       -->
-        <button th:formmethod="post" class="btn btn-primary" type="submit" name="action" value="recipe" th:formaction="@{/recipes}">Search Recipes</button>
-        <button th:formmethod="post" class="btn btn-primary" type="submit" th:formaction="@{/fitness}">Fitness</button>
-        <button th:formmethod="post" class="btn btn-primary" type="submit" name="action" value="foodDiary" th:formaction="@{/foodDiary}">Food Diary</button>
-        <button th:formmethod="get" class="btn btn-primary" type="submit" th:formaction="@{/logout}">Logout</button>        
-    </form>
+    <div class="container">
+        <div class="entire-form">
+            <h1 style="text-align: center;">Welcome, <span th:text="${username}"    ></span>!</h1>
+            <h3 style="text-align: center;">What would you like to do today?</h3>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card" style="width: 25rem; float: right;">
+                        <img th:src="@{/images/eating.jpg}" width="350" height="220" class="card-img-top" alt="...">
+                        <div class="card-body">
+                        <h5 class="card-title">Eat Healthy</h5>
+                        <p class="card-text">Craving for something sweet but watching out for your diet? Search for some healthy food that would not break your calories intake for the day!</p>
+                        <a href="/recipes" class="btn btn-primary">Search recipes</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="card" style="width: 25rem;">
+                        <img th:src="@{/images/gym.jpg}" width="350" height="220" class="card-img-top" alt="...">
+                        <div class="card-body">
+                        <h5 class="card-title">Fitness</h5>
+                        <p style="height: 1.8cm" class="card-text">Track your exercises as you train to become a fit-spo!</p>
+                        <a href="/fitness" class="btn btn-primary">Add exercises</a>
+                        <a href="/fitness/search" class="btn btn-primary">Get exercises</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>

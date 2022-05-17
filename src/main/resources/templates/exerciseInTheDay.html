@@ -6,29 +6,111 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Exercises</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        .header {
+            border: 2px solid black;
+            text-align: center;
+        }
+        
+        #container {
+            border: 2px solid red;
+            margin-top: 78px;
+        }
+
+        #left-section {
+            border: 2px solid green;
+        }
+
+        #right-section {
+            border: 2px solid blue;
+        }
+
+        .card {
+            border: 1px solid purple;
+            margin-left: 3cm;
+            margin-right: 3cm;
+            background-color: aliceblue;
+            margin-bottom: 0.5cm;
+            margin-top: 0.5cm;
+            
+        }
+
+        .nav h1 {
+            text-align: center;
+            margin-left: 3cm;
+            padding-top: 0.3cm;
+            padding-bottom: 0.3cm;
+            /* border: 1px solid red; */
+        }
+
+        .nav {
+            /* border: 2px solid orange; */
+            position: fixed;
+            top: 0;
+            overflow: hidden;
+            width: 100%;
+            z-index: 2;
+            background-color: blanchedalmond;
+        }
+
+        .form {
+            /* border: 2px solid pink; */
+            float: right;
+            align-items: center;
+            margin-top: 0.4cm;
+            margin-bottom: 0.3cm;
+            margin-left: 0.1cm;            
+        }
+
+        .allForms {
+            float: left;
+            /* border: 4px solid green; */
+            margin-left: 12.5cm;
+            /* YS jiumin! */
+        }
+
+    </style>
 </head>
 <body>
-    <div th:if="${listOfExercises.size() > 0}">
-        <h3> Great job <span th:text="${username}"></span>! You did <span th:text="${listOfExercises.size()}"></span> exercise(s) on <span th:text="${date}"></span>!</h3>
+
+    <div class="nav">
+        <h1><strong>Exercises</strong></h1>
+        <div class="allForms">
+            <form class="form">
+                <a href="/fitness" class="btn btn-primary btn-lg">Add another exercise</a>
+            </form>
+            <form class="form">
+                <a href="/protected/home" class="btn btn-primary btn-lg">Home</a>      
+            </form>
+            <form class="form">
+                <a href="/logout" class="btn btn-primary btn-lg">Logout</a>      
+            </form>
+        </div>
     </div>
 
-    <div th:each="ex : ${listOfExercises}">
-        <h4>Exercise <span th:text="${exStat.index + 1}"></span>: <span th:text="${ex.title}"></span></h4>
-        <ul th:each="exSet : ${ex.individualEx}">
-            <li th:text="${exSet.description} + ' ' + ${exSet.count} + ' ' + ${exSet.setCount} + ' ' + ${exSet.restInterval}"></li>
-        </ul>
-        <h6>Calories burnt: <span th:text="${ex.calories}"></span></h6>
-    </div>
-    <h6>Total calories burnt for the day: <span th:text="${totalCalories}"></span></h6>
+    <div id="container">
+        <div class="header">
+            <div th:if="${listOfExercises.size() > 0}">
+                <h3> Great job <span th:text="${username}"></span>! You did <span th:text="${listOfExercises.size()}"></span> exercise(s) on <span th:text="${date}"></span>!</h3>
+                <h5>Total calories burnt for the day: <span th:text="${totalCalories}"></span></h5>
+            </div>
+            <div th:unless="${listOfExercises.size() > 0}">
+                <h3>No exercises done on <span th:text="${date}">!</span></h3>
+            </div>
 
-    <form> 
-        <button type="submit" th:formmethod="post" th:formaction="@{/fitness}">
-            Add another exercise!
-        </button>
-        <button type="submit" th:formmethod="get" th:formaction="@{/protected/home}">
-            Home
-        </button>
-    </form>
+        </div>
+
+        <div id="left-section" th:if="${listOfExercises.size() > 0}">
+            <div class="card" th:each="ex : ${listOfExercises}">
+                <h4>Exercise <span th:text="${exStat.index + 1}"></span>: <span th:text="${ex.title}"></span></h4>
+                <ol>
+                    <li th:each="exSet : ${ex.individualEx}"><span th:text="${exSet.description} + ' ' + ${exSet.count} + ' ' + ${exSet.setCount} + ' ' + ${exSet.restInterval}"></span></li>
+                </ol>
+                <h6>Calories burnt: <span th:text="${ex.calories}"></span></h6>
+            </div>
+        </div>
+    </div>
+
     
 </body>
 </html>

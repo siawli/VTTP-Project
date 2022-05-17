@@ -1,0 +1,72 @@
+.container {
+    margin-top: 0.5cm;
+    height: 75vh;
+    display: flex;
+}
+
+/* body {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 100;
+} */
+
+.header {
+    padding-top: 0.5cm;
+    height: 140px;
+    background-color: black;
+    color: white;
+    text-align: center;
+}
+
+#section-one {
+    width: 50%;
+    height: 100%;
+    /* background-color: green; */
+}
+
+#section-two {
+    width: 50%;
+    height: 100%;
+    /* border: 1px solid black; */
+    /* background-color: pink; */
+    padding: 1cm;
+    border-radius: 25px;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form {
+    border: 1px solid black;
+    border-radius: 25px;
+    padding: 1cm;
+    margin-top: 1.2cm;
+    background-color: aliceblue;
+}
+
+#section-two .form2 {
+    border: 1px solid black;
+    border-radius: 25px;
+    padding: 1cm;
+    background-color: aliceblue;
+}
+
+.formmethod {
+    border: 1px solid black;
+}
+
+.container2 {
+    margin-top: 0.5cm;
+    height: 75vh;
+    display: flex;
+    border: 2px solid blue;
+    background-color: gainsboro;
+}
+
+#recipe {
+    border: 2px solid grey;
+    border-radius: 25px;
+}
+
