@@ -20,14 +20,17 @@
 			border: 1px solid black;
 			border-radius: 25px;
 			/* margin-right: 5cm; */
-			margin-left: 3.5cm;
-			margin-top: 1cm;
+			margin-left: 3cm;
+			margin-top: 3cm;
+			margin-bottom: 1cm;
 			padding: 0.5cm 0.5cm;
 			justify-content: center;
 			align-items: center;
 			display: flex;
 			float: left;
-			background-color: white; opacity: 0.8;
+			background-color: white; 
+			opacity: 0.95;
+
 		}
 
 		h1 {
@@ -65,10 +68,61 @@
 			padding-left: 0.2cm;
 		}
 
+		
+        .nav h1 {
+            text-align: center;
+            margin-left: 3cm;
+            padding-top: 0.3cm;
+            padding-bottom: 0.3cm;
+            margin-bottom: auto;
+            margin-top: auto;
+            /* border: 1px solid red; */
+        }
+
+        .nav {
+            /* border: 2px solid orange; */
+            position: fixed;
+            top: 0;
+            overflow: hidden;
+            width: 100%;
+            z-index: 2;
+            background-color: #003D7C;
+            color: white;
+            height: 2.2cm;
+        }
+
+        .form {
+            /* border: 2px solid pink; */
+            float: right;
+            align-items: center;
+            margin-top: 0.4cm;
+            margin-bottom: 0.3cm;
+            margin-left: 0.1cm;          
+        }
+
+        .allForms {
+            /* float: left; */
+            /* border: 4px solid green; */
+            margin-left: 19cm;
+            margin-bottom: auto;
+            margin-top: auto;
+            /* YS jiumin! */
+        }
 
 	</style>
 </head>
 <body>
+	<div class="nav">
+        <h1 class="navbar-text"><strong>Fitness</strong></h1>
+        <div class="allForms">
+            <form class="form">
+                <a href="/logout" class="btn btn-primary">Logout</a>      
+            </form>
+            <form class="form">
+                <a href="/protected/home" class="btn btn-primary">Home</a>      
+            </form>
+        </div>
+    </div>
 
 	<div id="container">
 		<form method="POST" th:action="@{/protected/fitness/exercise}">

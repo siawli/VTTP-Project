@@ -22,7 +22,7 @@ public class RecipeSvcTest {
     void shouldReturnNonEmptyList() {
 
         Optional<List<RecipesModel>> listRecipes 
-            = recipeSvc.getRecipes("pizza", "breakfast", 1000000);
+            = recipeSvc.getRecipes("pizza", "Breakfast", 1000000);
         assertTrue(listRecipes.isPresent());
     }
 
@@ -30,7 +30,7 @@ public class RecipeSvcTest {
     void shouldReturnEmptyList() {
 
         Optional<List<RecipesModel>> listRecipes 
-            = recipeSvc.getRecipes("abcdefg", "breakfast", 1000000);
+            = recipeSvc.getRecipes("abcdefg", "Breakfast", 1000000);
         assertTrue(listRecipes.isEmpty());
     }
     

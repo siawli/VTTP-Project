@@ -26,7 +26,7 @@
             margin-right: 2cm;
             margin-left: 2cm;
             background-color: white;
-            /* opacity: 0.95; */
+            opacity: 0.95;
             margin-bottom: 0.45cm;
             padding-bottom: 0.3cm;
         }
@@ -40,15 +40,6 @@
             margin-top: auto;
             /* border: 1px solid red; */
         }
-
-        /* .nav {
-            position: fixed;
-            top: 0;
-            overflow: hidden;
-            width: 100%;
-            z-index: 2;
-            background-color: blanchedalmond;
-        } */
 
         .nav {
             /* border: 2px solid orange; */
@@ -72,10 +63,9 @@
             align-items: center;
             margin-top: 0.4cm;
             margin-bottom: 0.3cm;
-            margin-left: 5.3cm;
+            margin-left: 0.8cm;
             margin-bottom: auto;
             margin-top: auto;
-
         }
 
         .navbar-text {
@@ -83,6 +73,7 @@
             padding-top: 0.9cm; 
             margin-bottom: auto;
             margin-top: auto;  
+            /* width: 4cm; */
         }
 
         .links {
@@ -118,16 +109,17 @@
 			-o-background-size: cover;
 			background-size: cover;
 		}
+        
 
     </style>
 </head>
 <body>
     <div class="nav">
         <h1 class="navbar-text"><strong>Healthy Living</strong></h1>
-        <h6 class="navbar-text">Date: <span th:text="${date}"></span></h6>
-        <h6 class="navbar-text">BMI: <span th:text="${#numbers.formatDecimal(bmi, 1, 'DEFAULT', 1, 'DEFAULT')}"></span></h6>
+        <h6 class="navbar-text" style="width: 6cm;">Date: <span th:text="${date}"></span></h6>
+        <h6 class="navbar-text" style="width: 2cm;">BMI: <span th:text="${#numbers.formatDecimal(bmi, 1, 'DEFAULT', 1, 'DEFAULT')}"></span></h6>
         <!-- ${#numbers.formatDecimal(abc.value, 1, 'DEFAULT', 2, 'DEFAULT')} -->
-        <h6 class="navbar-text">Goals: <span th:text="${goals}"></span></h6>
+        <h6 class="navbar-text" style="width: 7cm;">Goals: <span th:text="${goals}"></span></h6>
         <form class="form">
             <a href="/logout" class="btn btn-primary">Logout</a>
         </form>
@@ -143,7 +135,7 @@
                         <img th:src="@{/images/eating.jpg}" width="350" height="220" class="card-img-top" alt="...">
                         <div class="card-body">
                         <h5 class="card-title">Eat Healthy</h5>
-                        <p style="height: 2.4cm" class="card-text">Craving for something sweet but watching out for your diet? Search for some healthy food that would not break your calories intake for the day!</p>
+                        <p style="height: 2.4cm" class="card-text">Craving for something sweet but watching out for your diet? Search for some healthy food that would not break your total calories intake for the day!</p>
                         <a href="/protected/recipes" class="btn btn-primary">Search recipes</a>
                         </div>
                     </div>
