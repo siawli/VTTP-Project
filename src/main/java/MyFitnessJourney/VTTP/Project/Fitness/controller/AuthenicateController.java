@@ -34,6 +34,7 @@ public class AuthenicateController {
 
         UserModel user = (UserModel)sess.getAttribute("user");
         String username = (String)sess.getAttribute("username");
+        System.out.println(">>>> username: " + username);
         String password = (String)sess.getAttribute("password");
 
         user.setUsername(username);

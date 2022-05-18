@@ -16,23 +16,39 @@
         .card {
             margin-top: 0.5cm;
             margin-bottom: 0.5cm;
+            /* border: 1px solid blue; */
         }
 
         .entire-form {
-            border: 1.5px solid black;
+            /* border: 1.5px solid black; */
             border-radius: 25px;
             padding-top: 0.5cm;
-            margin-right: 1cm;
-            margin-left: 1cm;
+            margin-right: 2cm;
+            margin-left: 2cm;
+            background-color: white;
+            /* opacity: 0.95; */
+            margin-bottom: 0.45cm;
+            padding-bottom: 0.3cm;
         }
 
         .nav h1 {
             text-align: center;
-            margin-left: 3.1cm;
+            margin-left: 3cm;
             padding-top: 0.3cm;
             padding-bottom: 0.3cm;
+            margin-bottom: auto;
+            margin-top: auto;
             /* border: 1px solid red; */
         }
+
+        /* .nav {
+            position: fixed;
+            top: 0;
+            overflow: hidden;
+            width: 100%;
+            z-index: 2;
+            background-color: blanchedalmond;
+        } */
 
         .nav {
             /* border: 2px solid orange; */
@@ -41,11 +57,13 @@
             overflow: hidden;
             width: 100%;
             z-index: 2;
-            background-color: blanchedalmond;
+            background-color: #003D7C;
+            color: white;
+            height: 2.2cm;
         }
 
         .container {
-            margin-top: 85px;
+            margin-top: 100px;
         }
 
         .form {
@@ -54,14 +72,52 @@
             align-items: center;
             margin-top: 0.4cm;
             margin-bottom: 0.3cm;
-            margin-left: 4.7cm;
+            margin-left: 5.3cm;
+            margin-bottom: auto;
+            margin-top: auto;
 
         }
 
         .navbar-text {
-                margin-left: 0.8cm;
-            padding-top: 1cm;   
+            margin-left: 0.8cm;
+            padding-top: 0.9cm; 
+            margin-bottom: auto;
+            margin-top: auto;  
         }
+
+        .links {
+            /* border: 1px solid red; */
+            /* display: flex; */
+            margin-left: 0.3cm;
+        }
+
+        #link-one {
+            /* border: 3px solid purple; */
+            width: 40%;
+            margin-bottom: 0.1cm;
+        }
+
+        #link-two {
+            /* border: 3px solid black; */
+            /* float: right; */
+            width: 60%;
+            margin-right: 0.3cm;
+            margin-bottom: 0.4cm;
+        }
+
+        #button-ex {
+            width: 3.2cm;
+            /* border: 13px solid blue; */
+            margin-left: 0.15cm;
+        }
+
+		body {
+			background: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.5)), url(/images/home.jpg) no-repeat center center fixed;
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+		}
 
     </style>
 </head>
@@ -71,9 +127,9 @@
         <h6 class="navbar-text">Date: <span th:text="${date}"></span></h6>
         <h6 class="navbar-text">BMI: <span th:text="${#numbers.formatDecimal(bmi, 1, 'DEFAULT', 1, 'DEFAULT')}"></span></h6>
         <!-- ${#numbers.formatDecimal(abc.value, 1, 'DEFAULT', 2, 'DEFAULT')} -->
-        <h6 class="navbar-text">Your goals: <span th:text="${goals}"></span></h6>
+        <h6 class="navbar-text">Goals: <span th:text="${goals}"></span></h6>
         <form class="form">
-            <a href="/logout" class="btn btn-primary btn-lg">Logout</a>
+            <a href="/logout" class="btn btn-primary">Logout</a>
         </form>
     </div>
 
@@ -87,8 +143,8 @@
                         <img th:src="@{/images/eating.jpg}" width="350" height="220" class="card-img-top" alt="...">
                         <div class="card-body">
                         <h5 class="card-title">Eat Healthy</h5>
-                        <p class="card-text">Craving for something sweet but watching out for your diet? Search for some healthy food that would not break your calories intake for the day!</p>
-                        <a href="/recipes" class="btn btn-primary">Search recipes</a>
+                        <p style="height: 2.4cm" class="card-text">Craving for something sweet but watching out for your diet? Search for some healthy food that would not break your calories intake for the day!</p>
+                        <a href="/protected/recipes" class="btn btn-primary">Search recipes</a>
                         </div>
                     </div>
                 </div>
@@ -97,9 +153,29 @@
                         <img th:src="@{/images/gym.jpg}" width="350" height="220" class="card-img-top" alt="...">
                         <div class="card-body">
                         <h5 class="card-title">Fitness</h5>
-                        <p style="height: 1.8cm" class="card-text">Track your exercises as you train to become a fit-spo!</p>
-                        <a href="/fitness" class="btn btn-primary">Add exercises</a>
-                        <a href="/fitness/search" class="btn btn-primary">Get exercises</a>
+                        <p class="card-text">Track your exercises as you train to become a fit-spo!</p>
+                        </div> 
+                        <div class="links">
+                            <div id="link-one">
+                                <a href="/protected/fitness" class="btn btn-primary">Add exercises</a>
+                            </div>
+                            <div id="link-two">
+                                <form th:action="@{/protected/fitness/search/exercises}" method="GET">
+                                    <table>
+                                        <tr>
+                                            <td><label style="margin-right: 0.15cm;" for="exampleFormControlInput1" class="form-label">Date: </label></td>
+                                            <td>
+                                                <input type="date" class="form-control" th:name="date" width="100%" required>
+                                            </td>
+                                            <td>
+                                                <!-- <div style="border: 1px solid red;"> -->
+                                                    <button id="button-ex" class="btn btn-primary" type="submit">Get exercises</button>
+                                                <!-- </div> -->
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </form>          
+                            </div>             
                         </div>
                     </div>
                 </div>

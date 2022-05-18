@@ -3,54 +3,57 @@ package MyFitnessJourney.VTTP.Project.Fitness.recipes;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/recipes")
+@RequestMapping("/protected/recipes")
 public class RecipesController {
+
+    // int count = 0;
 
     @Autowired
     private RecipesService recipeSvc;
 
-    @PostMapping
-    public String recipesForm() {
-        return "recipesSearch";
-    }
-
     @GetMapping
-    public String recipesFormError() {
-        return "recipesSearch";
+    public ModelAndView recipesForm(HttpSession sess) {
+        ModelAndView mav = new ModelAndView();
+        String count = (String)sess.getAttribute("count");
+        if (count != null) {
+            mav.addObject("errorMessage", "No search results available! Try another search!");
+            mav.setStatus(HttpStatus.NOT_FOUND);
+            sess.setAttribute("count", null);
+        } else {
+            mav.addObject("errorMessage", "");
+            mav.setStatus(HttpStatus.OK);
+        }
+
+        mav.setViewName("recipesSearch");
+        return mav;
     }
 
     @GetMapping("/search")
-    public ModelAndView searchRecipes(@RequestParam String query, 
+    public ModelAndView searchRecipes(@RequestParam("query") String query, 
         @RequestParam(name = "mealTypes", required = false) String mealTypes,
-        @RequestParam(name="maxCalories", required = false, defaultValue = "100000000") Integer maxCalories) {
+        @RequestParam(name="maxCalories", required = false, defaultValue = "100000000") Integer maxCalories, HttpSession sess) {
 
         ModelAndView mav = new ModelAndView();
-
-        System.out.println("controller mealTypes: " + mealTypes);
-        System.out.println("controller maxCalories: " + maxCalories);
 
         Optional<List<RecipesModel>> listOfRecipesOpt = 
             recipeSvc.getRecipes(query, mealTypes, maxCalories);
 
-            
-        // System.out.println(">>>>>> " + listOfRecipesOpt.get().get(0).getLabel());
-
-        
         if (listOfRecipesOpt.isEmpty()) {
-            mav.setViewName("recipesSearchError");
-            return mav;
+            // count++;
+            sess.setAttribute("count", "1");
+            return new ModelAndView("redirect:/protected/recipes");
         }
-
-        System.out.println(">>>>>> " + listOfRecipesOpt.get().get(0).getLabel());
 
         mav.setViewName("recipes");
         mav.addObject("listRecipes", listOfRecipesOpt.get());

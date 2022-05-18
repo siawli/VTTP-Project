@@ -98,7 +98,7 @@ public class ExerciseSvcTest {
         ExcerciseSet exSet = new ExcerciseSet();
         Random r = new Random();
 
-        exSet.setCount(r.nextFloat(0, 50));
+        exSet.setCount(Float.toString(r.nextFloat(0, 50)));
         exSet.setSetCount(r.nextInt(0, 10));
         exSet.setRestInterval(r.nextFloat(0, 90));
         exSet.setTimestamp(timestamp);

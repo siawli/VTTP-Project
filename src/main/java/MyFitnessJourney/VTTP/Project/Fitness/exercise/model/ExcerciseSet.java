@@ -1,11 +1,14 @@
 package MyFitnessJourney.VTTP.Project.Fitness.exercise.model;
 
+import java.text.DecimalFormat;
+
 import org.springframework.util.MultiValueMap;
 
 public class ExcerciseSet {
 
     private String description;
-    private Float count;
+    private String count; 
+    // reason why 'count' is a String is because I want to chop .0 if present
     private String timestamp;
     private int setCount;
     private Float restInterval;
@@ -28,11 +31,11 @@ public class ExcerciseSet {
     public void setDescription(String description) {
         this.description = description;
     }
-    public Float getCount() {
+    public String getCount() {
         return count;
     }
-    public void setCount(Float count) {
-        this.count = count;
+    public void setCount(String count) {
+        this.count = new DecimalFormat("#.##").format(Double.valueOf(count));
     }
     public String getTimestamp() {
         return timestamp;
@@ -54,7 +57,7 @@ public class ExcerciseSet {
                 Float count = Float.parseFloat(_count);
 
                 ExcerciseSet indivExercise = new ExcerciseSet();
-                indivExercise.setCount(count);
+                indivExercise.setCount(count.toString());
                 indivExercise.setDescription(description);
                 indivExercise.setSetCount(Integer.parseInt(form.getFirst("setCount")));
                 indivExercise.setRestInterval(Float.parseFloat(form.getFirst("restInterval")));

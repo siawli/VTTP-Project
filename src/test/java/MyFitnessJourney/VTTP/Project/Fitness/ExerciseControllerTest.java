@@ -1,141 +1,206 @@
 package MyFitnessJourney.VTTP.Project.Fitness;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
-
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.mock.web.MockServletContext;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import MyFitnessJourney.VTTP.Project.Fitness.exercise.ExerciseService;
-import jakarta.json.Json;
-import jakarta.json.JsonObject;
+import MyFitnessJourney.VTTP.Project.Fitness.user.UserModel;
+
+import static org.hamcrest.Matchers.containsString;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import javax.servlet.ServletContext;
+
+import static MyFitnessJourney.VTTP.Project.Fitness.exercise.ExerciseRepo.ExerciseQueries.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 public class ExerciseControllerTest {
 
     @Autowired
-    private ExerciseService exSvc;
+    private MockMvc mvc;
 
     @Autowired
     private JdbcTemplate template;
 
-    @Autowired
-    private MockMvc mvc;
+    @Test
+    void shouldReturnLogExercisePage() {
+        RequestBuilder req = MockMvcRequestBuilders
+                .get("/protected/fitness")
+                .accept(MediaType.TEXT_HTML_VALUE)
+                .sessionAttr("username", "test")
+                .sessionAttr("password", "test");
+
+        try {
+            this.mvc.perform(req).andExpect(content().string(containsString("On Track to your Fitness Goals")));
+        } catch (Exception ex) {
+            fail("fail to get exercise form page");
+            return;
+        }
+    }
 
     @Test
-    void shouldgetUsernameAndPassword() {
+    void shouldReturnExercisesInTheDay() {
         RequestBuilder req = MockMvcRequestBuilders
-                            .post("/fitness")
-                            .accept(MediaType.TEXT_HTML_VALUE)
-                            .param("username", "test")
-                            .param("password", "test");
-
-
-        MvcResult result = null;
+                .get("/protected/fitness/search/exercises")
+                .queryParam("date", "2022-05-18")
+                .sessionAttr("username", "test")
+                .accept(MediaType.TEXT_HTML_VALUE);
 
         try {
-            result = mvc.perform(req).andReturn();
-        } catch (Exception ex ) {
-            fail("cannot inovocate controller");
-            return;
-        }
-
-        MockHttpServletResponse resp = result.getResponse();
-        try {
-            String payload = resp.getContentAsString();
-            //System.out.println(">>> resp: " + payload);
-            assertNotNull(payload);
+            this.mvc.perform(req).andExpect(content().string(containsString("Total calories ")));
         } catch (Exception ex) {
-            fail("cannot retrieve payload");
+            fail("fail to get exercise search by day page with list of ex");
             return;
         }
+    }
 
+    @Test
+    void shouldReturnNoExercisesDoneForTheDay() {
+        RequestBuilder req = MockMvcRequestBuilders
+            .get("/protected/fitness/search/exercises")
+            .queryParam("date", "2022-05-20")
+            .sessionAttr("username", "test")
+            .accept(MediaType.TEXT_HTML_VALUE);
+            
+        try {
+            this.mvc.perform(req).andExpect(content().string(containsString("No exercises")));
+        } catch (Exception ex) {
+            fail("failed to get exercise search with zero exercises");
+        }
     }
 
     // @Test
-    // void shouldLogExercises() {
-    //     System.out.println("RUNNING");
-
+    // void shouldInsertExercises() {
     //     RequestBuilder req = MockMvcRequestBuilders
-    //                 .post("/fitness/exercise", createForm())
-    //                 .contentType(MediaType.APPLICATION_JSON);
+    //             .post("/protected/fitness/exercise")
+    //             .sessionAttr("username", "test")
+    //             .param("form", "{title=[EMOM], date=[2022-05-17], exercise-1=[Lunges], count-1=[20], exercise-2=[Running], count-2=[2.4], exercise-3=[], count-3=[1], exercise-4=[], count-4=[1], exercise-5=[], count-5=[1], exercise-6=[], count-6=[1], exercise-7=[], count-7=[1], exercise-8=[], count-8=[1], setCount=[1], restInterval=[0], calories=[0]}");
 
-    //     // RequestBuilder req = MockMvcRequestBuilders
-    //     //         .post("/fitness/exercise", createForm())
-    //     //         .accept(MediaType.TEXT_HTML_VALUE);
-
-    //     // RequestBuilder req = MockMvcRequestBuilders
-    //     //         .post("/fitness/exercise")
-    //     //         .accept(MediaType.TEXT_HTML_VALUE)        
-    //     //         .param("name", "test")
-    //     //         .param("password", "test")
-    //     //         .param("title", "EMOM")
-    //     //         .param("date", "2022-05-01")
-    //     //         .param("exercise-1", "Lunges")
-    //     //         .param("count-1", "20")
-    //     //         .param("exercise-2", "Sit-ups")
-    //     //         .param("count-2", "20")
-    //     //         .param("exercise-3", "Russian Twists")
-    //     //         .param("count-3", "20")
-    //     //         .param("exercise-4", "Squats")
-    //     //         .param("count-4", "20")
-    //     //         .param("exercise-5", "")
-    //     //         .param("count-5", "1")
-    //     //         .param("exercise-6", "")
-    //     //         .param("count-6", "1")
-    //     //         .param("exercise-7", "")
-    //     //         .param("count-7", "1")
-    //     //         .param("exercise-8", "")
-    //     //         .param("count-8", "1")
-    //     //         .param("setCount", "3")
-    //     //         .param("restInterval", "3")
-    //     //         .param("calories", "80");
-        
-    //     MvcResult result = null;
-
-    //     try {
-    //         result = mvc.perform(req).andReturn();
-    //     } catch (Exception ex ) {
-    //         fail("cannot inovocate controller");
-    //         return;
-    //     }
-        
-    //     MockHttpServletResponse resp = result.getResponse();
-    //     try {
-    //         String payload = resp.getContentAsString();
-    //         System.out.println(">>> ???????: " + payload);
-    //         assertNotNull(payload);
-    //     } catch (Exception ex) {
-    //         fail("cannot retrieve payload");
-    //         return;
-    //     }
+    //         try {
+    //             this.mvc.perform(req).andExpect(content().string(containsString("Great job")));
+    //         } catch (Exception ex) {
+    //             fail("failed to logged exercises");
+    //         }
     // }
+
+    // @Test
+    // void shouldInsertExercisesAndReturnListExOfDay() {
+        // RequestBuilder req = MockMvcRequestBuilders
+        //         .post("/protected/fitness/exercise")
+        //         .sessionAttr("username", "test")
+        //         .param("title", "EMOM")
+        //         .param("date", "2022-05-18")
+        //         .param("exercise-1", "Lunges")
+        //         .param("count-1", "20")
+        //         .param("exercise-2", "Running")
+        //         .param("count-2", "2.4")
+        //         .param("exercise-3", "")
+        //         .param("count-3", "1")
+        //         .param("exercise-4", "")
+        //         .param("count-4", "1")
+        //         .param("exercise-5", "")
+        //         .param("count-5", "1")
+        //         .param("exercise-6", "")
+        //         .param("count-6", "1")
+        //         .param("exercise-7", "")
+        //         .param("count-7", "1")
+        //         .param("exercise-8", "")
+        //         .param("count-8", "1")
+        //            .param("restInterval", "0")
+        //         .param("calories", "0")
+        //         .accept(MediaType.TEXT_HTML_VALUE);
+    //     MultiValueMap<String, String> map = createMVM();
+    //     RequestBuilder req = MockMvcRequestBuilders
+    //         .post("/protected/fitness/exercise")
+    //         .sessionAttr("username", "test")
+    //         .flashAttr("form", map);
+    //     try {
+    //         this.mvc.perform(req).andExpect(content().string(containsString("Great job")));
+    //     } catch (Exception ex) {
+    //         fail("failed to log exercises and exercise page");
+    //         return;
+    //     }
+    // }     .param("setCount", "1")
+        // 
+
+    private MultiValueMap<String, String> createMVM() {
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+
+        map.add("title", "EMOM");
+        map.add("date", "2022-05-18");
+        map.add("exercise-1", "Lunges");
+        map.add("count-1", "20");
+        map.add("exercise-2", "Running");
+        map.add("count-2", "2map.4");
+        map.add("exercise-3", "");
+        map.add("count-3", "1");
+        map.add("exercise-4", "");
+        map.add("count-4", "1");
+        map.add("exercise-5", "");
+        map.add("count-5", "1");
+        map.add("exercise-6", "");
+        map.add("count-6", "1");
+        map.add("exercise-7", "");
+        map.add("count-7", "1");
+        map.add("exercise-8", "");
+        map.add("count-8", "1");
+        map.add("setCount", "1");
+        map.add("restInterval", "0");
+        map.add("calories", "0");
+
+        return map;  
+    }
+
+    private UserModel createUser(String username) {
+
+        UserModel user = new UserModel();
+        user.setUsername(username);
+        user.setPassword(username);
+        user.setHeight(1.70f);
+        user.setWeight(62f);
+        user.setGoals("Get 6 packs!");
+        user.setBmi(user.getHeight(), user.getWeight());
+
+        return user;
+    }
+
 
     @BeforeEach
     void setup() {
         // insert into user (username, password, height, weight, bmi, goals) values ('siawli', sha1('siaw'), 1.70, 60, 23, 'be fitter');
+        String username = "test";
+        UserModel user = createUser(username);
         final String SQL_INSERT_USER = 
-            "insert into user (username, password, height, weight, bmi, goals) values ('test',sha1('test'), 1.70, 60, 23 ,'Stronger')";
+            "insert into user (username, password, height, weight, bmi, goals) values (?, ?, ?, ?, ? ,?)";
         
-        template.update(SQL_INSERT_USER);
+        template.update(SQL_INSERT_USER, username, user.getPassword(), user.getHeight(), user.getWeight(), user.getBmi(), user.getGoals());
+
+        template.update(SQL_INSERT_EXERCISE, "EMOM", "2022-05-18", "2022-05-18 05:28:54", "180", "test");
+        // public static final String SQL_INSERT_EXERCISE = 
+        //      "insert into exercise (exercise_title, exercise_date, exercise_time, exercise_calories, username) values (?, ?, ?, ?, ?)";
+        template.update(SQL_INSERT_INDIVIDUAL_EX, "Lunges", "20", "1", "2", "2022-05-18 05:28:54");
+        template.update(SQL_INSERT_INDIVIDUAL_EX, "Sit-Ups", "20", "1", "2", "2022-05-18 05:28:54");
+        // public static final String SQL_INSERT_INDIVIDUAL_EX = 
+        //      "insert into exercise_set (step_description, step_count, set_count, set_rest_interval, exercise_time) values (?, ?, ?, ?, ?)";
     }
 
     @AfterEach
@@ -144,75 +209,5 @@ public class ExerciseControllerTest {
             "delete from user where username = 'test'";
             template.update(SQL_DELETE_USER);
     }
-
-    private JsonObject createForm() {
-        JsonObject jsObj = Json.createObjectBuilder()
-        .add("name", "test")
-        .add("password", "test")
-        .add("title", "EMOM")
-        .add("date", "2022-05-01")
-        .add("exercise-1", "Lunges")
-        .add("count-1", "20")
-        .add("exercise-2", "Sit-ups")
-        .add("count-2", "20")
-        .add("exercise-3", "Russian Twists")
-        .add("count-3", "20")
-        .add("exercise-4", "Squats")
-        .add("count-4", "20")
-        .add("exercise-5", "")
-        .add("count-5", "1")
-        .add("exercise-6", "")
-        .add("count-6", "1")
-        .add("exercise-7", "")
-        .add("count-7", "1")
-        .add("exercise-8", "")
-        .add("count-8", "1")
-        .add("setCount", "3")
-        .add("restInterval", "3")
-        .add("calories", "80")
-        .build();
-
-        return jsObj;
-    }
-
-
-    // private Exercise createEx(String d1, String d2, String d3) {
-    //     Exercise ex = new Exercise();
-    //     ex.setTitle("EMOM");
-    //     ex.setDate("2022-05-01");
-    //     ex.setCalories(180);
-    //     ex.setUsername("test");
-
-    //     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
-    //     LocalDateTime now = LocalDateTime.now();
-    //     ex.setTimestamp(now.toString());
-
-    //     List<String> listExericseDescription = new ArrayList<>();
-    //     listExericseDescription.add(d1);
-    //     listExericseDescription.add(d2);
-    //     listExericseDescription.add(d3);
-
-    //     for (String des : listExericseDescription) {
-    //         ExcerciseSet exSet = createExSet(now.toString(), des);
-    //         ex.addIndividualEx(exSet);
-    //     }
-
-    //     return ex;
-    // }
-
-    // private ExcerciseSet createExSet(String timestamp, String description) {
-    //     ExcerciseSet exSet = new ExcerciseSet();
-    //     Random r = new Random();
-
-    //     exSet.setCount(r.nextFloat(0, 50));
-    //     exSet.setSetCount(r.nextInt(0, 10));
-    //     exSet.setRestInterval(r.nextFloat(0, 90));
-    //     exSet.setTimestamp(timestamp);
-    //     exSet.setDescription(description);
-
-    //     return exSet;
-    // }
-
-
     
 }

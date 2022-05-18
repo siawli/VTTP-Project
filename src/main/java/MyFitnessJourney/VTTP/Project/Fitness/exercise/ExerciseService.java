@@ -61,7 +61,7 @@ public class ExerciseService {
                 while (timestamp.equals(result.getString("exercise_time"))) {
                     System.out.println("count: " + count);
                     ExcerciseSet exSet = new ExcerciseSet();
-                    exSet.setCount(result.getFloat("set_count"));
+                    exSet.setCount(result.getString("step_count"));
                     exSet.setDescription(result.getString("step_description"));
                     exSet.setRestInterval(result.getFloat("set_rest_interval"));
                     exSet.setTimestamp(timestamp);

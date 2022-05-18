@@ -25,8 +25,8 @@ public class UserSvcTest {
     void shouldInsertNewUserAndFindAddedUser() {
         
         UserModel user = new UserModel();
-        user.setUsername("fred");
-        user.setPassword("fred");
+        user.setUsername("tommy");
+        user.setPassword("tommy");
         user.setHeight(1.70f);
         user.setWeight(62f);
         user.setGoals("Get 6 packs!");
@@ -38,7 +38,7 @@ public class UserSvcTest {
         assertTrue(userOpt.isPresent());
 
         final String SQL_DELETE_USER = "delete from user where username = ?";
-        template.update(SQL_DELETE_USER, "fred");
+        template.update(SQL_DELETE_USER, "tommy");
 
     }
 

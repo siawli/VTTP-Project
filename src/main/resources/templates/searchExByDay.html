@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Exercises</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        .nav h1 {
+            text-align: center;
+            margin-left: 3.1cm;
+            /* padding-top: 0.3cm;
+            padding-bottom: 0.3cm; */
+            margin-bottom: auto;
+            margin-top: auto;
+            /* border: 1px solid red; */
+        }
+
+        .nav {
+            /* border: 2px solid orange; */
+            position: fixed;
+            top: 0;
+            overflow: hidden;
+            width: 100%;
+            z-index: 2;
+            background-color: black;
+            color: white;
+            height: 2.2cm;
+        }
+
+        .form {
+            /* border: 2px solid pink; */
+            float: right;
+            align-items: center;
+            margin-top: auto;
+            margin-bottom: auto;
+            margin-left: 0.1cm;            
+        }
+
+        .allForms {
+            float: right;
+            /* border: 4px solid green; */
+            /* margin-left: 12.5cm; */
+            /* YS jiumin! */
+            /* margin-left: auto;
+            margin-right: auto; */
+            width: 23cm;
+            margin-top: auto;
+            margin-bottom: auto;
+            /* border: 1px solid red; */
+        }
+
+        .header {
+            border: 1px solid black;
+            text-align: center;
+            background-color: #003D7C;
+            color: white;
+            border-top-left-radius: 25px;
+            border-top-right-radius: 25px;
+            padding-top: 0.25cm;
+            padding-bottom: 0.25cm;
+        }
+        
+        .card {
+            border: 1px solid purple;
+            margin-left: 1.5cm;
+            margin-right: 1.5cm;
+            background-color: aliceblue;
+            margin-bottom: 0.5cm;
+            margin-top: 0.5cm;
+            padding: 0.2cm;
+            
+        }
+
+        #container {
+            /* border: 3px solid green; */
+            /* background-color: aliceblue; */
+            display: flex;
+        }
+
+        #section-one {
+            /* border: 2px solid red; */
+            margin-top: 120px;
+            width: 30%;
+            margin-left: 3cm;
+            
+        }
+
+        #section-two {
+            /* border: 1px solid black;
+            border-radius: 25px; */
+            /* border-bottom-left-radius: 25px;
+            border-bottom-right-radius: 25px; */
+            margin-top: 120px;
+            width: 70%;
+            margin-right: 3cm;
+        }
+
+        .body {
+            border: 1px solid black;
+            border-bottom-left-radius: 25px;
+            border-bottom-right-radius: 25px;
+            margin-bottom: 1cm;
+        }
+
+        .no-exercise {
+            align-items: center;
+            justify-content: center;
+            /* border: 1px solid blue; */
+            text-align: center;
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <div class="nav">
+        <h1><strong>Exercises</strong></h1>
+        <div class="allForms">
+            <form class="form">
+                <a href="/logout" class="btn btn-primary">Logout</a>      
+            </form>
+            <form class="form">
+                <a href="/protected/home" class="btn btn-primary">Home</a>      
+            </form>
+            <form class="form">
+                <a href="/protected/fitness" class="btn btn-primary">Add another exercise</a>
+            </form>
+        </div>
+    </div>
+
+    <div id="container">
+        <div id="section-one">
+            <form th:action="@{/fitness/search/exercises}" method="GET">
+                <table>
+					<tr>
+						<td><label style="margin-right: 0.15cm;" for="exampleFormControlInput1" class="form-label">Date: </label></td>
+						<td>
+                            <input type="date" class="form-control" th:name="date" width="100%" required>
+						</td>
+					</tr>
+				</table>
+
+                <button class="btn btn-primary" type="submit" style="margin-top: 0.1cm;">Get exercises</button>
+            </form>
+        </div>
+
+        <div id="section-two">
+            <div th:if="${message.size() > 0}">
+                <div th:unless="${listOfExercises.size() > 0}", class="no-exercise">
+                    <h3>No exercises done on <span th:text="${date}"></span>!</h3>
+                    <img th:src="@{/images/getFit.jpg}" height="428" width="428" style="margin-top: 0.3cm;">
+                </div>
+                <div class="header" th:if="${listOfExercises.size() > 0}">
+                    <h3> Great job <span th:text="${username}"></span>! You did <span th:text="${listOfExercises.size()}"></span> exercise(s) on <span th:text="${date}"></span>!</h3>
+                    <h5>Total calories burnt for the day: <span th:text="${totalCalories}"></span></h5>
+                </div>
+
+                <div class="body" th:if="${listOfExercises.size() > 0}">
+                    <div class="card" th:each="ex : ${listOfExercises}">
+                        <h4>Exercise <span th:text="${exStat.index + 1}"></span>: <span th:text="${ex.title}"></span></h4>
+                        <ol>
+                            <li th:each="exSet : ${ex.individualEx}"><span th:text="${exSet.description} + ' ' + ${exSet.count} + ' ' + ${exSet.setCount} + ' ' + ${exSet.restInterval}"></span></li>
+                        </ol>
+                        <h6>Calories burnt: <span th:text="${ex.calories}"></span></h6>
+                    </div>
+                </div>
+            </div>
+        </div>    
+    </div>
+
+
+
+</body>
+</html>

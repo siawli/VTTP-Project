@@ -29,13 +29,19 @@ public class HealthyController {
     wah not sure is it because haven't learn frontend, but it was so difficult to redirect to the same page and handling the GET vs POST request!!! That's why I have 'count' to see whether the redirection is due to a GET (refresh on page or redirected from login) vs whether it was redirected from the controller due to the error thrown when username is not found/incorrect.
     */
 
+
     @GetMapping
     public ModelAndView login() {
+        //String countLogin = (String)sess.getAttribute("countLogin");
+
         ModelAndView mav = new ModelAndView();
         mav.setViewName("index");
-        if (countLogin > 0) { 
+
+        // if (countLogin != null) { 
+        if (countLogin == 1) {
             mav.setStatus(HttpStatus.NOT_FOUND);
             mav.addObject("errorMessage", "Username or password incorrect! Please try again or sign up for an account!");
+            // sess.setAttribute("countLogin", null);
             countLogin = 0;
         } else {
             mav.addObject("errorMessage", "");
@@ -46,12 +52,16 @@ public class HealthyController {
 
     @GetMapping("/signUp")
     public ModelAndView newSignUpError() {
+        //String countSignUp = (String)sess.getAttribute("countSignUp");
+        
         ModelAndView mav = new ModelAndView();
         mav.setViewName("signUp");
-        
-        if (countSignUp > 0) {
+
+        // if (countSignUp != null) {
+        if (countSignUp == 1) {
             mav.addObject("errorMessage", "Username already taken! Try another username!");
             mav.setStatus(HttpStatus.NOT_ACCEPTABLE);
+            // sess.setAttribute("countSignUp", null);
             countSignUp = 0;
         } else {
             mav.addObject("errorMessage", "");
@@ -62,21 +72,23 @@ public class HealthyController {
     }
 
     @PostMapping("/home")
-    public ModelAndView homePage(@ModelAttribute UserModel user, 
-        @ModelAttribute("home") String home, @ModelAttribute("username") String name, @ModelAttribute("password") String password, HttpSession sess) {
+    public ModelAndView homePage(@ModelAttribute("user") UserModel user, 
+        @ModelAttribute("home") String home, HttpSession sess) {
             
         ModelAndView mav = new ModelAndView();
+        // System.out.printin(">>>> username: " + user.getUsername());
 
         if (home.equals("login")) {
             Optional<UserModel> userOpt = userSvc.findUserByUsernameSvc(user);
             if (userOpt.isEmpty()) {
+                // sess.setAttribute("countLogin", "1");
                 countLogin++;
-                mav = new ModelAndView("redirect:/");
+                return new ModelAndView("redirect:/");
             } else {
-                sess.setAttribute("username", name);
-                sess.setAttribute("password", password);
+                sess.setAttribute("username", user.getUsername());
+                sess.setAttribute("password", user.getPassword());
                 sess.setAttribute("user", user);
-                mav = new ModelAndView("redirect:/protected/home");
+                return new ModelAndView("redirect:/protected/home");
             }
         } else if (home.equals("signUp")) {
             user.setBmi(user.getHeight(), user.getWeight());
@@ -84,11 +96,12 @@ public class HealthyController {
                 userSvc.insertNewUserSvc(user);
             } catch (Exception ex) {
                 ex.printStackTrace();
+                // sess.setAttribute("countSignUp", "1");
                 countSignUp++;
-                mav = new ModelAndView("redirect:/signUp");
+                return new ModelAndView("redirect:/signUp");
             }
-            sess.setAttribute("username", name);
-            sess.setAttribute("password", password);
+            sess.setAttribute("username", user.getUsername());
+            sess.setAttribute("password", user.getPassword());
             sess.setAttribute("user", user);
             mav = new ModelAndView("redirect:/protected/home");
         }

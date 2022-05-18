@@ -32,7 +32,7 @@ create table exercise (
 create table exercise_set (
     step_num int auto_increment not null,
     step_description varchar(64) not null,
-    step_count float,
+    step_count varchar(8),
     set_count int,
     set_rest_interval float,
     exercise_time timestamp,
