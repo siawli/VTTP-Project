@@ -42,18 +42,18 @@ public class UserSvcTest {
 
     }
 
-    // private UserModel createUser(String username) {
+    private UserModel createUser(String username) {
 
-    //     UserModel user = new UserModel();
-    //     user.setUsername(username);
-    //     user.setPassword("fred");
-    //     user.setHeight(1.70f);
-    //     user.setWeight(62f);
-    //     user.setGoals("Get 6 packs!");
-    //     user.setBmi(user.getHeight(), user.getWeight());
+        UserModel user = new UserModel();
+        user.setUsername(username);
+        user.setPassword("fred");
+        user.setHeight(1.70f);
+        user.setWeight(62f);
+        user.setGoals("Get 6 packs!");
+        user.setBmi(user.getHeight(), user.getWeight());
 
-    //     return user;
-    // }
+        return user;
+    }
 
     // @BeforeEach
     // void setup() {
@@ -73,5 +73,4 @@ public class UserSvcTest {
     //         template.update(SQL_DELETE_USER);
     // }
 
-    
 }

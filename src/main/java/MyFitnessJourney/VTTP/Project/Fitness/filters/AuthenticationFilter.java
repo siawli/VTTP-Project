@@ -19,7 +19,6 @@ public class AuthenticationFilter implements Filter{
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-        // TODO Auto-generated method stub
         HttpServletResponse httpResp = (HttpServletResponse)response;
         HttpServletRequest httpReq = (HttpServletRequest)request;
 
@@ -27,8 +26,8 @@ public class AuthenticationFilter implements Filter{
         String username = (String)sess.getAttribute("username");
 
         System.out.println(">>>> requested url: " + httpReq.getRequestURL().toString());
-        System.out.println(">>>> httpResp: " + httpResp.toString());
-        System.out.println(">>>> username: " + username);
+        // System.out.println(">>>> httpResp: " + httpResp.toString());
+        // System.out.println(">>>> username: " + username);
         
         if ((username == null) || (username.trim().length() <= 0)) {
             httpResp.sendRedirect("/");

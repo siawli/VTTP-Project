@@ -20,34 +20,24 @@
         }
 
         .entire-form {
-            /* border: 1.5px solid black; */
+            border: 1.5px solid black;
             border-radius: 25px;
             padding-top: 0.5cm;
-            margin-right: 2cm;
-            margin-left: 2cm;
+            /* margin-right: 2cm;
+            margin-left: 2cm; */
             background-color: white;
             opacity: 0.95;
             margin-bottom: 0.45cm;
             padding-bottom: 0.3cm;
-        }
+        }       
 
-        .nav h1 {
-            text-align: center;
-            margin-left: 3cm;
-            padding-top: 0.3cm;
-            padding-bottom: 0.3cm;
-            margin-bottom: auto;
-            margin-top: auto;
-            /* border: 1px solid red; */
-        }
-
-        .nav {
+        #nav {
             /* border: 2px solid orange; */
             position: fixed;
             top: 0;
             overflow: hidden;
             width: 100%;
-            z-index: 2;
+            z-index: 3;
             background-color: #003D7C;
             color: white;
             height: 2.2cm;
@@ -60,20 +50,19 @@
         .form {
             /* border: 2px solid pink; */
             float: right;
-            align-items: center;
+            /* align-items: center;
             margin-top: 0.4cm;
             margin-bottom: 0.3cm;
             margin-left: 0.8cm;
             margin-bottom: auto;
-            margin-top: auto;
+            margin-top: auto; */
         }
 
         .navbar-text {
-            margin-left: 0.8cm;
-            padding-top: 0.9cm; 
-            margin-bottom: auto;
-            margin-top: auto;  
-            /* width: 4cm; */
+            margin-right: 0.8cm;
+            vertical-align: baseline;
+            border: 1px solid green;
+            align-self: baseline;
         }
 
         .links {
@@ -99,8 +88,8 @@
         #button-ex {
             width: 3.2cm;
             /* border: 13px solid blue; */
-            margin-left: 0.15cm;
-        }
+            /* margin-left: 0.15cm; */
+         }
 
 		body {
 			background: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.5)), url(/images/home.jpg) no-repeat center center fixed;
@@ -109,25 +98,41 @@
 			-o-background-size: cover;
 			background-size: cover;
 		}
+
+        #nav-within {
+            border: 2px solid red;
+            display: flex;
+            height: 2.2cm;
+        }
         
+        .center {
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* table tr {
+            border: 1px solid black;
+            width: 20cm;
+        } */
 
     </style>
 </head>
 <body>
-    <div class="nav">
-        <h1 class="navbar-text"><strong>Healthy Living</strong></h1>
-        <h6 class="navbar-text" style="width: 6cm;">Date: <span th:text="${date}"></span></h6>
-        <h6 class="navbar-text" style="width: 2cm;">BMI: <span th:text="${#numbers.formatDecimal(bmi, 1, 'DEFAULT', 1, 'DEFAULT')}"></span></h6>
-        <!-- ${#numbers.formatDecimal(abc.value, 1, 'DEFAULT', 2, 'DEFAULT')} -->
-        <h6 class="navbar-text" style="width: 7cm;">Goals: <span th:text="${goals}"></span></h6>
-        <form class="form">
-            <a href="/logout" class="btn btn-primary">Logout</a>
-        </form>
+    <div id="nav", class="center">
+        <div id="nav-within", class="center">
+            <h1 class="navbar-text"><strong>Healthy Living</strong></h1>
+            <h6 class="navbar-text" style="width: 6cm;">Date: <span th:text="${date}"></span></h6>
+            <h6 class="navbar-text" style="width: 2cm;">BMI: <span th:text="${#numbers.formatDecimal(bmi, 1, 'DEFAULT', 1, 'DEFAULT')}"></span></h6>
+            <h6 class="navbar-text" style="width: 7cm;">Goals: <span th:text="${goals}"></span></h6>
+            <form class="form">
+                <a href="/logout" class="btn btn-primary">Logout</a>
+            </form>
+        </div>
     </div>
 
     <div class="container">
         <div class="entire-form">
-            <h1 style="text-align: center;">Welcome, <span th:text="${username}"    ></span>!</h1>
+            <h1 style="text-align: center;">Welcome, <span th:text="${username}"></span>!</h1>
             <h3 style="text-align: center;">What would you like to do today?</h3>
             <div class="row">
                 <div class="col-sm-6">
@@ -154,15 +159,13 @@
                             <div id="link-two">
                                 <form th:action="@{/protected/fitness/search/exercises}" method="GET">
                                     <table>
-                                        <tr>
+                                        <tr >
                                             <td><label style="margin-right: 0.15cm;" for="exampleFormControlInput1" class="form-label">Date: </label></td>
                                             <td>
                                                 <input type="date" class="form-control" th:name="date" width="100%" required>
                                             </td>
                                             <td>
-                                                <!-- <div style="border: 1px solid red;"> -->
-                                                    <button id="button-ex" class="btn btn-primary" type="submit">Get exercises</button>
-                                                <!-- </div> -->
+                                                <button id="button-ex"class="btn btn-primary" type="submit">Get exercises</button>
                                             </td>
                                         </tr>
                                     </table>

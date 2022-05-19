@@ -15,7 +15,7 @@ public class AppConfig {
     public FilterRegistrationBean<AuthenticationFilter> registerFilters() {
 
         AuthenticationFilter authFilter = new AuthenticationFilter();
-
+        System.out.println(">>>>>>>> register filter");
         FilterRegistrationBean<AuthenticationFilter> regFilter = new FilterRegistrationBean<>();
         regFilter.setFilter(authFilter);
         regFilter.addUrlPatterns("/protected/*");

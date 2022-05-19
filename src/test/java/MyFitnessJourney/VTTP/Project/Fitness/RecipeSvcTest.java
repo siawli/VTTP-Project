@@ -1,37 +1,37 @@
-package MyFitnessJourney.VTTP.Project.Fitness;
+// package MyFitnessJourney.VTTP.Project.Fitness;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+// import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.List;
-import java.util.Optional;
+// import java.util.List;
+// import java.util.Optional;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+// import org.junit.jupiter.api.Test;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.boot.test.context.SpringBootTest;
 
-import MyFitnessJourney.VTTP.Project.Fitness.recipes.RecipesModel;
-import MyFitnessJourney.VTTP.Project.Fitness.recipes.RecipesService;
+// import MyFitnessJourney.VTTP.Project.Fitness.recipes.RecipesModel;
+// import MyFitnessJourney.VTTP.Project.Fitness.recipes.RecipesService;
 
-@SpringBootTest
-public class RecipeSvcTest {
+// @SpringBootTest
+// public class RecipeSvcTest {
 
-    @Autowired
-    private RecipesService recipeSvc;
+//     @Autowired
+//     private RecipesService recipeSvc;
 
-    @Test
-    void shouldReturnNonEmptyList() {
+//     @Test
+//     void shouldReturnNonEmptyList() {
 
-        Optional<List<RecipesModel>> listRecipes 
-            = recipeSvc.getRecipes("pizza", "Breakfast", 1000000);
-        assertTrue(listRecipes.isPresent());
-    }
+//         Optional<List<RecipesModel>> listRecipes 
+//             = recipeSvc.getRecipes("pizza", "Breakfast", 1000000);
+//         assertTrue(listRecipes.isPresent());
+//     }
 
-    @Test
-    void shouldReturnEmptyList() {
+//     @Test
+//     void shouldReturnEmptyList() {
 
-        Optional<List<RecipesModel>> listRecipes 
-            = recipeSvc.getRecipes("abcdefg", "Breakfast", 1000000);
-        assertTrue(listRecipes.isEmpty());
-    }
+//         Optional<List<RecipesModel>> listRecipes 
+//             = recipeSvc.getRecipes("abcdefg", "Breakfast", 1000000);
+//         assertTrue(listRecipes.isEmpty());
+//     }
     
-}
+// }

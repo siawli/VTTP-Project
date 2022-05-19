@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,10 +29,10 @@ public class HealthyController {
     */
 
 
-    @GetMapping
+    @GetMapping()
     public ModelAndView login() {
         //String countLogin = (String)sess.getAttribute("countLogin");
-
+        System.out.println(">>>>> sess: ");
         ModelAndView mav = new ModelAndView();
         mav.setViewName("index");
 
@@ -87,7 +86,7 @@ public class HealthyController {
             } else {
                 sess.setAttribute("username", user.getUsername());
                 sess.setAttribute("password", user.getPassword());
-                sess.setAttribute("user", user);
+                sess.setAttribute("user", new UserModel());
                 return new ModelAndView("redirect:/protected/home");
             }
         } else if (home.equals("signUp")) {

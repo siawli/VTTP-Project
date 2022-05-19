@@ -6,28 +6,23 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.mock.web.MockServletContext;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.RequestMapping;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import MyFitnessJourney.VTTP.Project.Fitness.user.UserModel;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.fail;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import javax.servlet.ServletContext;
 
 import static MyFitnessJourney.VTTP.Project.Fitness.exercise.ExerciseRepo.ExerciseQueries.*;
 
@@ -88,46 +83,72 @@ public class ExerciseControllerTest {
         }
     }
 
-    // @Test
-    // void shouldInsertExercises() {
-    //     RequestBuilder req = MockMvcRequestBuilders
-    //             .post("/protected/fitness/exercise")
-    //             .sessionAttr("username", "test")
-    //             .param("form", "{title=[EMOM], date=[2022-05-17], exercise-1=[Lunges], count-1=[20], exercise-2=[Running], count-2=[2.4], exercise-3=[], count-3=[1], exercise-4=[], count-4=[1], exercise-5=[], count-5=[1], exercise-6=[], count-6=[1], exercise-7=[], count-7=[1], exercise-8=[], count-8=[1], setCount=[1], restInterval=[0], calories=[0]}");
+    @Test
+    void shouldInsertExercises() {
+        RequestBuilder req = MockMvcRequestBuilders
+                .post("/protected/fitness/exercise")
+                .sessionAttr("username", "test")
+                .params(createMVM())
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-    //         try {
-    //             this.mvc.perform(req).andExpect(content().string(containsString("Great job")));
-    //         } catch (Exception ex) {
-    //             fail("failed to logged exercises");
-    //         }
-    // }
+            //     System.out.println(">>>>> test");
+
+            // MvcResult result = null;
+            // try {
+            //     result = mvc.perform(req).andReturn();
+            //     System.out.println(">>>> result: " + result.toString());
+            // } catch (Exception ex) {
+            //     fail("cannot perform mvc invocation", ex);
+            //     return;
+            // }
+
+            // MockHttpServletResponse resp = result.getResponse();
+
+            // System.out.println(resp.getStatus());
+            
+            // try {
+            //     String payload = resp.getContentAsString();
+            //     System.out.println(">>>> payload: " + payload);
+            //     assertNotNull(payload);
+            // } catch (Exception ex) {
+            //     fail("cannot retrieve response payload", ex);
+            //     return;
+            // }
+
+
+            try {
+                this.mvc.perform(req).andExpect(content().string(containsString("Great job")));
+            } catch (Exception ex) {
+                fail("failed to logged exercises", ex);
+            }
+    }
 
     // @Test
     // void shouldInsertExercisesAndReturnListExOfDay() {
-        // RequestBuilder req = MockMvcRequestBuilders
-        //         .post("/protected/fitness/exercise")
-        //         .sessionAttr("username", "test")
-        //         .param("title", "EMOM")
-        //         .param("date", "2022-05-18")
-        //         .param("exercise-1", "Lunges")
-        //         .param("count-1", "20")
-        //         .param("exercise-2", "Running")
-        //         .param("count-2", "2.4")
-        //         .param("exercise-3", "")
-        //         .param("count-3", "1")
-        //         .param("exercise-4", "")
-        //         .param("count-4", "1")
-        //         .param("exercise-5", "")
-        //         .param("count-5", "1")
-        //         .param("exercise-6", "")
-        //         .param("count-6", "1")
-        //         .param("exercise-7", "")
-        //         .param("count-7", "1")
-        //         .param("exercise-8", "")
-        //         .param("count-8", "1")
-        //            .param("restInterval", "0")
-        //         .param("calories", "0")
-        //         .accept(MediaType.TEXT_HTML_VALUE);
+    //     RequestBuilder req = MockMvcRequestBuilders
+    //             .post("/protected/fitness/exercise")
+    //             .sessionAttr("username", "test")
+    //             .param("title", "EMOM")
+    //             .param("date", "2022-05-18")
+    //             .param("exercise-1", "Lunges")
+    //             .param("count-1", "20")
+    //             .param("exercise-2", "Running")
+    //             .param("count-2", "2.4")
+    //             .param("exercise-3", "")
+    //             .param("count-3", "1")
+    //             .param("exercise-4", "")
+    //             .param("count-4", "1")
+    //             .param("exercise-5", "")
+    //             .param("count-5", "1")
+    //             .param("exercise-6", "")
+    //             .param("count-6", "1")
+    //             .param("exercise-7", "")
+    //             .param("count-7", "1")
+    //             .param("exercise-8", "")
+    //             .param("count-8", "1")
+    //             .param("restInterval", "0")
+    //             .param("calories", "0")
+    //             .accept(MediaType.TEXT_HTML_VALUE);
     //     MultiValueMap<String, String> map = createMVM();
     //     RequestBuilder req = MockMvcRequestBuilders
     //         .post("/protected/fitness/exercise")
@@ -139,8 +160,7 @@ public class ExerciseControllerTest {
     //         fail("failed to log exercises and exercise page");
     //         return;
     //     }
-    // }     .param("setCount", "1")
-        // 
+    // }
 
     private MultiValueMap<String, String> createMVM() {
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
@@ -150,7 +170,7 @@ public class ExerciseControllerTest {
         map.add("exercise-1", "Lunges");
         map.add("count-1", "20");
         map.add("exercise-2", "Running");
-        map.add("count-2", "2map.4");
+        map.add("count-2", "2.4");
         map.add("exercise-3", "");
         map.add("count-3", "1");
         map.add("exercise-4", "");
@@ -167,6 +187,8 @@ public class ExerciseControllerTest {
         map.add("restInterval", "0");
         map.add("calories", "0");
 
+        System.out.println(">>>>> map: " + map.toString());
+
         return map;  
     }
 
@@ -182,7 +204,6 @@ public class ExerciseControllerTest {
 
         return user;
     }
-
 
     @BeforeEach
     void setup() {

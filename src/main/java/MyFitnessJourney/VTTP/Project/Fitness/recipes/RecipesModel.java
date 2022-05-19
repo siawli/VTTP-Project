@@ -9,7 +9,14 @@ public class RecipesModel {
     private List<String> ingredientLines = new LinkedList<>();
     private int calories;
     private String image;
-
+    private String url;
+    
+    public String getUrl() {
+        return url;
+    }
+    public void setUrl(String url) {
+        this.url = url;
+    }
     public String getLabel() {
         return label;
     }

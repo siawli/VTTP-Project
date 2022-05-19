@@ -19,7 +19,7 @@ public class ExerciseService {
     @Autowired
     private ExerciseRepository exRepo;
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void insertNewExercise(String username, Exercise ex) {
 
         try {

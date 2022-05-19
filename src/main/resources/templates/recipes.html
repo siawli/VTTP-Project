@@ -137,9 +137,25 @@
                 <div class="center">
                     <img th:src="@{${recipe.image}}" height="200" width="200">
                     <p style="text-align: center;"><strong>Calories: <span th:text="${recipe.calories}"></span></strong></p>
+                    <a style="text-align: center;" th:href="@{${recipe.url}}" target="_blank">Recipe instructions</a>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- <div>
+        <button class="btn btn-primary" type="submit" th:href="'/protected/recipes/search/' + ${query} + '/' + {page}">Previous page</button>
+    
+        <button th:if="${listRecipes.size() == 9}" class="btn btn-primary" type="submit" th:href="'/protected/recipes/search/' + ${query} + '/' + {page}">Next page</button>
+    </div>
+    <form class="form"> -->
+        <a th:if="${backPage > 0}" th:href="@{|/protected/recipes/search/${query}/${backPage}|}" class="btn btn-primary">Previous Page!</a>
+        <a th:if="${showNextPageBtn}" th:href="@{|/protected/recipes/search/${query}/${startPage}|}" class="btn btn-primary">Next Page</a>
+
+        <!-- // |/findbyId/${rep.id}| -->
+
+        <!-- <a href="/protected/home" class="btn btn-primary">Home</a>   -->
+    <!-- </form> -->
+
 </body>
 </html>
