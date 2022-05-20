@@ -211,7 +211,7 @@ public class ExerciseControllerTest {
         String username = "test";
         UserModel user = createUser(username);
         final String SQL_INSERT_USER = 
-            "insert into user (username, password, height, weight, bmi, goals) values (?, ?, ?, ?, ? ,?)";
+            "insert into user (username, password, height, weight, bmi, goals) values (?, sha1(?), ?, ?, ?, ?)";
         
         template.update(SQL_INSERT_USER, username, user.getPassword(), user.getHeight(), user.getWeight(), user.getBmi(), user.getGoals());
 

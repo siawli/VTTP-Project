@@ -1,6 +1,5 @@
 package MyFitnessJourney.VTTP.Project.Fitness.recipes;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,8 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/protected/recipes")
 public class RecipesController {
-
-    // int count = 0;
 
     @Autowired
     private RecipesService recipeSvc;
@@ -46,8 +43,6 @@ public class RecipesController {
         @RequestParam(name = "mealTypes", required = false) String mealTypes,
         @RequestParam(name="maxCalories", required = false, defaultValue = "100000000") Integer maxCalories, HttpSession sess) {
 
-        ModelAndView mav = new ModelAndView();
-
         Optional<List<RecipesModel>> listOfRecipesOpt = 
             recipeSvc.getRecipes(query, mealTypes, maxCalories);
 
@@ -63,9 +58,7 @@ public class RecipesController {
     @GetMapping("/search/{query}/{page}")
     public ModelAndView searchRecipesPagination(@PathVariable String query, @PathVariable int page) {
 
-        List<RecipesModel> listRecipes = new LinkedList<>();
         ModelAndView mav = new ModelAndView();
-
 
         Optional<List<RecipesModel>> listRecipesToShowOpt = recipeSvc.pagination(page);
 

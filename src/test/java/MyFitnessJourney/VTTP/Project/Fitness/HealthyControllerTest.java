@@ -43,11 +43,10 @@ public class HealthyControllerTest {
     void shouldGetLoginPage()   {
         RequestBuilder req = MockMvcRequestBuilders.get("/")
                 .accept(MediaType.TEXT_HTML_VALUE)
-                .sessionAttr("username", "test");
+                .sessionAttr("username", "test")
+                .sessionAttr("countLogin", "");
 
         try {
-           // this.mvc.perform(MockMvcRequestBuilders.get("/")).andExpectnull)
-            // this.mvc.perform(req).andExpect(redirectedUrl("/"));
             this.mvc.perform(req).andExpect(content().string(containsString("Login")));
         } catch (Exception ex) {
             fail("fail to get Login page");
@@ -60,7 +59,8 @@ public class HealthyControllerTest {
     void shouldGetSignUpPage() {
         RequestBuilder req = MockMvcRequestBuilders.get("/signUp")
                 .accept(MediaType.TEXT_HTML_VALUE)
-                .sessionAttr("username", "test");
+                .sessionAttr("username", "test")
+                .sessionAttr("countSignUp", "");
 
         try {
             this.mvc.perform(req).andExpect(content().string(containsString("Sign Up")));
@@ -92,7 +92,6 @@ public class HealthyControllerTest {
 
     @Test
     void shouldGetHomePageAsUserExists() {
-
         RequestBuilder req = MockMvcRequestBuilders.post("/home")
         .accept(MediaType.TEXT_HTML_VALUE)
         .queryParam("home", "login")

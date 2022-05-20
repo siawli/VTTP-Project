@@ -25,7 +25,7 @@ public class AuthenticationFilter implements Filter{
         HttpSession sess = httpReq.getSession();
         String username = (String)sess.getAttribute("username");
 
-        System.out.println(">>>> requested url: " + httpReq.getRequestURL().toString());
+        // System.out.println(">>>> requested url: " + httpReq.getRequestURL().toString());
         // System.out.println(">>>> httpResp: " + httpResp.toString());
         // System.out.println(">>>> username: " + username);
         

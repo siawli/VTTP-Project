@@ -1,21 +1,12 @@
 package MyFitnessJourney.VTTP.Project.Fitness.recipes;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.lang.StackWalker.Option;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.MediaType;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import jakarta.json.Json;
@@ -26,12 +17,6 @@ import jakarta.json.JsonValue;
 
 @Service
 public class RecipesService {
-
-    // @Value("${eda.app.id}")
-    // private String appId;
-
-    // @Value("${eda.app.key}")
-    // private String appKey;
 
     private static final String appId = System.getenv("EDA_APP_ID");
     private static final String appKey = System.getenv("EDA_APP_KEY");
@@ -59,20 +44,11 @@ public class RecipesService {
             }
         }
 
-        System.out.println("calories: " + maxCalories.toString());
         if (maxCalories != 100000) {
             urlB.queryParam("calories", maxCalories.toString());
         }
 
         url = urlB.toUriString();
-
-        /* 
-        String url = "https://api.edamam.com/api/recipes/v2?q=chocolate%20brownie&type=public&app_id=0d2abaa4&app_key=041ecf38e812638aff96a58efd15ad85";
-        RequestEntity<Void> req = RequestEntity.get(url).accept(MediaType.APPLICATION_JSON).build();
-        RestTemplate template = new RestTemplate();
-        ResponseEntity<String> resp = template.exchange(req, String.class);
-        This method not working for two words input due to inputStream error??? :(
-        */
 
         int count = 0;
         listOfRecipes = new LinkedList<>();
@@ -118,17 +94,13 @@ public class RecipesService {
             try {
                 JsonObject _links = data.getJsonObject("_links");
                 url = _links.getJsonObject("next").getString("href");
-                System.out.println(">>>> url:" + url);
             } catch (Exception e) {
                 e.printStackTrace();
                 break;
             }
 
             count = listOfRecipes.size();
-            // System.out.println(">>>>> count: " + count);
         }
-
-        System.out.println(">>>> sizeOfListOfRecipes: " + listOfRecipes.size());
 
         return Optional.of(listOfRecipes);
     }
@@ -138,7 +110,6 @@ public class RecipesService {
     }
 
     public Optional<List<RecipesModel>> pagination(int page) {
-        // List<RecipesModel> listRecipesReq = new LinkedList<>();
 
         if (listOfRecipes.size() > page*10) {
             return Optional.of(listOfRecipes.subList(page*10-10, page*10));
@@ -149,20 +120,4 @@ public class RecipesService {
         }
     }
 
-
-    /*
-    seems to have error here when used with ResponseEntity 
-    private JsonObject getJsonObjFromResp(ResponseEntity<String> resp) {
-        JsonObject data = null;
-        try (InputStream is = new ByteArrayInputStream(resp.getBody().getBytes())) {
-            JsonReader reader = Json.createReader(is);
-            data = reader.readObject();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        
-        return data;
-    }
-    */
-    
 }

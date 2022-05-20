@@ -3,6 +3,7 @@ package MyFitnessJourney.VTTP.Project.Fitness.controller;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -34,11 +35,11 @@ public class AuthenicateController {
 
         UserModel user = (UserModel)sess.getAttribute("user");
         String username = (String)sess.getAttribute("username");
-        System.out.println(">>>> username: " + username);
         String password = (String)sess.getAttribute("password");
 
         user.setUsername(username);
         user.setPassword(password);
+
         user = userSvc.findUserByUsernameSvc(user).get();
 
         mav.setViewName("homePage");
