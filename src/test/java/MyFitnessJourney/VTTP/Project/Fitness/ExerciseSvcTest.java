@@ -76,6 +76,8 @@ public class ExerciseSvcTest {
         ex.setDate("2022-05-01");
         ex.setCalories(180);
         ex.setUsername("test");
+        ex.setSetCount(1);
+        ex.setRestInterval("1");
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
         LocalDateTime now = LocalDateTime.now();
@@ -99,8 +101,6 @@ public class ExerciseSvcTest {
         Random r = new Random();
 
         exSet.setCount(Float.toString(r.nextFloat(0, 50)));
-        exSet.setSetCount(r.nextInt(0, 10));
-        exSet.setRestInterval(r.nextFloat(0, 90));
         exSet.setTimestamp(timestamp);
         exSet.setDescription(description);
 

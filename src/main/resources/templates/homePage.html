@@ -61,7 +61,7 @@
         .navbar-text {
             margin-right: 0.8cm;
             vertical-align: baseline;
-            border: 1px solid green;
+            /* border: 1px solid green; */
             align-self: baseline;
         }
 
@@ -100,7 +100,7 @@
 		}
 
         #nav-within {
-            border: 2px solid red;
+            /* border: 2px solid red; */
             display: flex;
             height: 2.2cm;
         }
@@ -157,7 +157,9 @@
                                         <tr >
                                             <td><label style="margin-right: 0.15cm;" for="exampleFormControlInput1" class="form-label">Date: </label></td>
                                             <td>
-                                                <input type="date" class="form-control" th:name="date" width="100%" required>
+                                                <div class="form-group col-lg-11">
+                                                    <input type="date" class="form-control" th:name="date" width="100%" required>
+                                                </div>
                                             </td>
                                             <td>
                                                 <button id="button-ex"class="btn btn-primary" type="submit">Get exercises</button>

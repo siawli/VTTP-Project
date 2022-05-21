@@ -215,11 +215,11 @@ public class ExerciseControllerTest {
         
         template.update(SQL_INSERT_USER, username, user.getPassword(), user.getHeight(), user.getWeight(), user.getBmi(), user.getGoals());
 
-        template.update(SQL_INSERT_EXERCISE, "EMOM", "2022-05-18", "2022-05-18 05:28:54", "180", "test");
+        template.update(SQL_INSERT_EXERCISE, "EMOM", "2022-05-18", "2022-05-18 05:28:54", "180", "1", "1", "test");
         // public static final String SQL_INSERT_EXERCISE = 
         //      "insert into exercise (exercise_title, exercise_date, exercise_time, exercise_calories, username) values (?, ?, ?, ?, ?)";
-        template.update(SQL_INSERT_INDIVIDUAL_EX, "Lunges", "20", "1", "2", "2022-05-18 05:28:54");
-        template.update(SQL_INSERT_INDIVIDUAL_EX, "Sit-Ups", "20", "1", "2", "2022-05-18 05:28:54");
+        template.update(SQL_INSERT_INDIVIDUAL_EX, "Lunges", "20", "2022-05-18 05:28:54");
+        template.update(SQL_INSERT_INDIVIDUAL_EX, "Sit-Ups", "20", "2022-05-18 05:28:54");
         // public static final String SQL_INSERT_INDIVIDUAL_EX = 
         //      "insert into exercise_set (step_description, step_count, set_count, set_rest_interval, exercise_time) values (?, ?, ?, ?, ?)";
     }
