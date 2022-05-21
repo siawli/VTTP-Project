@@ -86,7 +86,7 @@ public class HealthyController {
             } else {
                 sess.setAttribute("username", user.getUsername());
                 sess.setAttribute("password", user.getPassword());
-                sess.setAttribute("user", new UserModel());
+                sess.setAttribute("user", user);
                 return new ModelAndView("redirect:/protected/home");
             }
         } else if (home.equals("signUp")) {

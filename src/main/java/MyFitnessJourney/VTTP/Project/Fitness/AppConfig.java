@@ -1,7 +1,5 @@
 package MyFitnessJourney.VTTP.Project.Fitness;
 
-import javax.servlet.FilterRegistration;
-
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +13,6 @@ public class AppConfig {
     public FilterRegistrationBean<AuthenticationFilter> registerFilters() {
 
         AuthenticationFilter authFilter = new AuthenticationFilter();
-        System.out.println(">>>>>>>> register filter");
         FilterRegistrationBean<AuthenticationFilter> regFilter = new FilterRegistrationBean<>();
         regFilter.setFilter(authFilter);
         regFilter.addUrlPatterns("/protected/*");

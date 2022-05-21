@@ -52,44 +52,44 @@
             margin-bottom: auto;
         }
 
-        .nav h1 {
-            text-align: center;
-            margin-left: 3cm;
-            padding-top: 0.3cm;
-            padding-bottom: 0.3cm;
-            margin-bottom: auto;
-            margin-top: auto;
-            /* border: 1px solid red; */
-        }
-
-        .nav {
+        #nav {
             /* border: 2px solid orange; */
             position: fixed;
             top: 0;
             overflow: hidden;
             width: 100%;
-            z-index: 2;
+            z-index: 3;
             background-color: #003D7C;
             color: white;
             height: 2.2cm;
         }
 
+		.navbar-text {
+            border: 1px solid green;
+			padding-left: 2.8cm;
+            align-self: baseline;
+			align-items: center;
+			float:left;
+			padding:auto;
+			margin:3px;
+        }   
+
         .form {
-            /* border: 2px solid pink; */
             float: right;
-            align-items: center;
-            margin-top: 0.4cm;
-            margin-bottom: 0.3cm;
-            margin-left: 0.1cm;          
+			padding-right: 0.2cm;
         }
 
-        .allForms {
-            /* float: left; */
-            /* border: 4px solid green; */
-            margin-left: 15.5cm;
-            margin-bottom: auto;
-            margin-top: auto;
-            /* YS jiumin! */
+		#allForms {
+			border: 5px solid purple;
+			float:right;
+ 			padding-right: 2.5cm;	
+  			margin:18px;
+		}
+
+        #nav-within {
+            border: 2px solid red;
+            height: 2.2cm;
+			width: 100%;
         }
 
         .card {
@@ -103,22 +103,50 @@
 			-o-background-size: cover;
 			background-size: cover;
         }
+
+        .center1 {
+            align-items: center;
+            justify-content: center;
+        }
+
+        #nav-within2 {
+            /* border: 2px solid red; */
+            height: 2.2cm;
+			width: 100%;
+        }
+
+        #nav-within-right{
+            /* border: 3px solid black; */
+            float:right;
+  			margin:10px;
+            margin-right: 4cm;
+        }
+
+        #nav-within-left{
+            /* border: 3px solid black; */
+            float:left;
+  			margin:10px;
+            margin-left: 4cm;
+        }
+
         
     </style>
 </head>
 <body>
-    <div class="nav">
-        <h1 class="navbar-text"><strong>Recipes</strong></h1>
-        <div class="allForms">
-            <form class="form">
-                <a href="/logout" class="btn btn-primary">Logout</a>      
-            </form>
-            <form class="form">
-                <a href="/protected/home" class="btn btn-primary">Home</a>      
-            </form>
-            <form class="form">
-                <a href="/protected/recipes" class="btn btn-primary">Search new recipe!</a>
-            </form>
+    <div id="nav">
+        <div id="nav-within", class="center1" >
+			<h1 class="navbar-text"><strong>Recipes</strong></h1>
+			<div id="allForms">
+                <form class="form">
+                    <a href="/logout" class="btn btn-primary">Logout</a>      
+                </form>
+                <form class="form">
+                    <a href="/protected/home" class="btn btn-primary">Home</a>      
+                </form>
+                <form class="form">
+                    <a href="/protected/recipes" class="btn btn-primary">Search new recipe!</a>
+                </form>
+			</div>
         </div>
     </div>
 
@@ -137,9 +165,14 @@
                 <div class="center">
                     <img th:src="@{${recipe.image}}" height="200" width="200">
                     <p style="text-align: center;"><strong>Calories: <span th:text="${recipe.calories}"></span></strong></p>
-                    <a style="text-align: center;" th:href="@{${recipe.url}}" target="_blank">Recipe instructions</a>
+                    <p style="text-align: center;"><a th:href="@{${recipe.url}}" target="_blank">Recipe instructions</a></p>
                 </div>
             </div>
+        </div>
+
+        <div id="nav-within2">
+            <a id="nav-within-right" th:if="${showNextPageBtn}" th:href="@{|/protected/recipes/search/${query}/${startPage}|}" class="btn btn-primary">Next page</a>
+            <a id="nav-within-left" th:if="${backPage > 0}" th:href="@{|/protected/recipes/search/${query}/${backPage}|}" class="btn btn-primary">Previous page</a>
         </div>
     </div>
 
@@ -149,8 +182,6 @@
         <button th:if="${listRecipes.size() == 9}" class="btn btn-primary" type="submit" th:href="'/protected/recipes/search/' + ${query} + '/' + {page}">Next page</button>
     </div>
     <form class="form"> -->
-        <a th:if="${backPage > 0}" th:href="@{|/protected/recipes/search/${query}/${backPage}|}" class="btn btn-primary">Previous Page!</a>
-        <a th:if="${showNextPageBtn}" th:href="@{|/protected/recipes/search/${query}/${startPage}|}" class="btn btn-primary">Next Page</a>
 
         <!-- // |/findbyId/${rep.id}| -->
 

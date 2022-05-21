@@ -56,6 +56,9 @@ public class ExerciseService {
                 ex.setDate(result.getString("exercise_date"));
                 ex.setTimestamp(timestamp);
                 ex.setTitle(result.getString("exercise_title"));
+                ex.setRestInterval(result.getString("set_rest_interval"));
+                ex.setSetCount(result.getInt("set_count"));
+
                 
                 int count = 1;
                 while (timestamp.equals(result.getString("exercise_time"))) {
@@ -65,7 +68,6 @@ public class ExerciseService {
                     exSet.setDescription(result.getString("step_description"));
                     exSet.setRestInterval(result.getFloat("set_rest_interval"));
                     exSet.setTimestamp(timestamp);
-                    exSet.setSetCount(result.getInt("set_count"));
 
                     ex.getIndividualEx().add(exSet);
                     

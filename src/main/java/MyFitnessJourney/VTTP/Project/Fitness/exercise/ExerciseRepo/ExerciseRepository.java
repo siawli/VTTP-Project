@@ -21,25 +21,20 @@ public class ExerciseRepository {
     private JdbcTemplate template;
 
     public void insertExercise(Exercise ex, String username) {
-
         int added = template.update(SQL_INSERT_EXERCISE,
             ex.getTitle(), ex.getDate(), ex.getTimestamp(),
-            ex.getCalories(), username);
+            ex.getCalories(), ex.getSetCount(), ex.getRestInterval(), username);
     }
 
     public void insertIndividualEx(Exercise ex, String username) {
-
         List<ExcerciseSet> indivExList = ex.getIndividualEx();
         for (ExcerciseSet indivEx : indivExList) {
             int added = template.update(SQL_INSERT_INDIVIDUAL_EX,
-                indivEx.getDescription(), indivEx.getCount()
-                , indivEx.getSetCount(), indivEx.getRestInterval()
-                , ex.getTimestamp());
+                indivEx.getDescription(), indivEx.getCount(), ex.getTimestamp());
         }
     }
 
     public Optional<SqlRowSet> getAllExForTheDay(String username, String date) {
-        
         SqlRowSet result = template.queryForRowSet(SQL_FIND_ALL_PER_DAY,
             username, date);
 

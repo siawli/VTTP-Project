@@ -59,8 +59,6 @@ public class ExcerciseSet {
                 ExcerciseSet indivExercise = new ExcerciseSet();
                 indivExercise.setCount(count.toString());
                 indivExercise.setDescription(description);
-                indivExercise.setSetCount(Integer.parseInt(form.getFirst("setCount")));
-                indivExercise.setRestInterval(Float.parseFloat(form.getFirst("restInterval")));
                 ex.addIndividualEx(indivExercise);
                 i++;
             }

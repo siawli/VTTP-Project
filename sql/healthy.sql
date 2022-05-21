@@ -20,6 +20,8 @@ create table exercise (
     exercise_date varchar(16),
     exercise_time timestamp,
     exercise_calories int,
+    set_count int,
+    set_rest_interval varchar(8),
     username varchar(16),
 
     primary key (exercise_time),
@@ -33,8 +35,6 @@ create table exercise_set (
     step_num int auto_increment not null,
     step_description varchar(64) not null,
     step_count varchar(8),
-    set_count int,
-    set_rest_interval float,
     exercise_time timestamp,
 
     primary key (step_num),

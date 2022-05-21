@@ -1,5 +1,6 @@
 package MyFitnessJourney.VTTP.Project.Fitness.exercise.model;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
@@ -14,6 +15,8 @@ public class Exercise {
     private String timestamp;
     private int calories;
     private String username;
+    private int setCount;
+    private String restInterval;
     private List<ExcerciseSet> individualEx = new LinkedList<>();
     
     public List<ExcerciseSet> getIndividualEx() {
@@ -55,6 +58,18 @@ public class Exercise {
     public void setUsername(String username) {
         this.username = username;
     }
+    public String getRestInterval() {
+        return restInterval;
+    }
+    public void setRestInterval(String restInterval) {
+        this.restInterval = new DecimalFormat("#.##").format(Double.valueOf(restInterval));
+    }
+    public int getSetCount() {
+        return setCount;
+    }
+    public void setSetCount(int setCount) {
+        this.setCount = setCount;
+    }
 
 
     public static Exercise createEx(Exercise ex, MultiValueMap<String, String> form, String usernameOri) {
@@ -62,6 +77,8 @@ public class Exercise {
         ex.setDate(form.getFirst("date"));
         ex.setTitle(form.getFirst("title"));
         ex.setUsername(usernameOri);
+        ex.setSetCount(Integer.parseInt(form.getFirst("setCount")));
+        ex.setRestInterval(form.getFirst("restInterval"));
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
         LocalDateTime now = LocalDateTime.now();

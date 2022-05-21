@@ -62,16 +62,26 @@
             /* border: 1px solid red; */
         }
 
-        .nav {
+        #nav {
             /* border: 2px solid orange; */
             position: fixed;
             top: 0;
             overflow: hidden;
             width: 100%;
-            z-index: 2;
+            z-index: 3;
             background-color: #003D7C;
             color: white;
             height: 2.2cm;
+        }
+
+		.navbar-text {
+            border: 1px solid green;
+			padding-left: 2.8cm;
+            align-self: baseline;
+			align-items: center;
+			float:left;
+			padding:auto;
+			margin:3px;
         }
 
         .form1 {
@@ -83,31 +93,47 @@
             margin-left: 0.1cm;            
         }
 
-        .allForms {
-            /* float: right; */
-            /* border: 4px solid green; */
-            margin-left: 19cm;
-            /* YS jiumin! */
-            margin-bottom: auto;
-            margin-top: auto;
+		#nav-within {
+            border: 2px solid red;
+            height: 2.2cm;
+			width: 100%;
         }
+
+		#allForms {
+			border: 5px solid purple;
+			float:right;
+ 			padding-right: 2.5cm;	
+  			margin:1px;
+		}
 
         .parent {
             margin-top: 3.2cm;
         }
 
+        .center1 {
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form1 {
+            float: right;
+			padding-right: 0.2cm;
+        }
+
     </style>
 </head>
 <body>
-    <div class="nav">
-        <h1 class="navbar-text"><strong>Recipes</strong></h1>
-        <div class="allForms">
-            <form class="form1">
-                <a href="/logout" class="btn btn-primary">Logout</a>      
-            </form>
-            <form class="form1">
-                <a href="/protected/home" class="btn btn-primary">Home</a>      
-            </form>
+	<div id="nav">
+        <div id="nav-within", class="center1" >
+			<h1 class="navbar-text"><strong>Recipes</strong></h1>
+			<div id="allForms">
+				<form class="form1">
+					<a href="/logout" class="btn btn-primary">Logout</a>      
+				</form>
+				<form class="form1">
+					<a href="/protected/home" class="btn btn-primary">Home</a>      
+				</form>
+			</div>
         </div>
     </div>
 

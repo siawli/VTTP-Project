@@ -7,49 +7,47 @@
     <title>Search Exercises</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <style>
-        .nav h1 {
-            text-align: center;
-            margin-left: 3.1cm;
-            /* padding-top: 0.3cm;
-            padding-bottom: 0.3cm; */
-            margin-bottom: auto;
-            margin-top: auto;
-            /* border: 1px solid red; */
-        }
 
-        .nav {
+        #nav {
             /* border: 2px solid orange; */
             position: fixed;
             top: 0;
             overflow: hidden;
             width: 100%;
-            z-index: 2;
-            background-color: black;
+            z-index: 3;
+            background-color: #003D7C;
             color: white;
             height: 2.2cm;
         }
 
-        .form {
-            /* border: 2px solid pink; */
-            float: right;
-            align-items: center;
-            margin-top: auto;
-            margin-bottom: auto;
-            margin-left: 0.1cm;            
+		.navbar-text {
+            /* border: 1px solid green; */
+			padding-left: 2.8cm;
+            align-self: baseline;
+			align-items: center;
+			float:left;
+			padding:auto;
+			margin:3px;
         }
 
-        .allForms {
+
+        .form {
             float: right;
-            /* border: 4px solid green; */
-            /* margin-left: 12.5cm; */
-            /* YS jiumin! */
-            /* margin-left: auto;
-            margin-right: auto; */
-            width: 23cm;
-            margin-top: auto;
-            margin-bottom: auto;
-            /* border: 1px solid red; */
+			padding-right: 0.2cm;
         }
+
+		#nav-within {
+            /* border: 2px solid red; */
+            height: 2.2cm;
+			width: 100%;
+        }
+
+		#allForms {
+			/* border: 5px solid purple; */
+			float:right;
+ 			padding-right: 2.5cm;	
+  			margin:18px;
+		}
 
         .header {
             border: 1px solid black;
@@ -63,25 +61,27 @@
         }
         
         .card {
-            border: 1px solid purple;
-            margin-left: 1.5cm;
-            margin-right: 1.5cm;
-            background-color: aliceblue;
-            margin-bottom: 0.5cm;
-            margin-top: 0.5cm;
-            padding: 0.2cm;
+            /* border-right: 1px solid black; */
+            border-bottom: 1px solid black;
+            background-color: white;
+            opacity: 0.95;
+            /* margin-bottom: 0.3cm; */
+            /* margin-top: 0.5cm; */
+            padding: 0.5cm;
             
         }
 
         #container {
-            /* border: 3px solid green; */
+            border: 3px solid green;
             /* background-color: aliceblue; */
             display: flex;
+            background: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.5)), url(/images/exercise.jpg) no-repeat center center fixed;
+            margin-top: 2.2cm;
         }
 
         #section-one {
             /* border: 2px solid red; */
-            margin-top: 120px;
+            margin-top: 1cm;
             width: 30%;
             margin-left: 3cm;
             
@@ -92,7 +92,7 @@
             border-radius: 25px; */
             /* border-bottom-left-radius: 25px;
             border-bottom-right-radius: 25px; */
-            margin-top: 120px;
+            margin-top: 1cm;;
             width: 70%;
             margin-right: 3cm;
         }
@@ -111,29 +111,48 @@
             text-align: center;
         }
 
+        .para {
+            /* border: 1px solid green; */
+            height: 0.8cm;
+        }
+
+        p {
+            /* border: 1px solid red; */
+            display: inline-block;
+            margin-right: 0.8cm;
+
+        }
+
+        ol {
+            /* border: 1px solid salmon; */
+            margin-bottom: 0.3cm;
+        }
+
 
     </style>
 </head>
 <body>
 
-    <div class="nav">
-        <h1><strong>Exercises</strong></h1>
-        <div class="allForms">
-            <form class="form">
-                <a href="/logout" class="btn btn-primary">Logout</a>      
-            </form>
-            <form class="form">
-                <a href="/protected/home" class="btn btn-primary">Home</a>      
-            </form>
-            <form class="form">
-                <a href="/protected/fitness" class="btn btn-primary">Add another exercise</a>
-            </form>
+    <div id="nav">
+        <div id="nav-within", class="center" >
+			<h1 class="navbar-text"><strong>Fitness</strong></h1>
+			<div id="allForms">
+                <form class="form">
+                    <a href="/logout" class="btn btn-primary">Logout</a>      
+                </form>
+                <form class="form">
+                    <a href="/protected/home" class="btn btn-primary">Home</a>      
+                </form>
+                <form class="form">
+                    <a href="/protected/fitness" class="btn btn-primary">Add exercise</a>
+                </form>
+			</div>
         </div>
     </div>
 
     <div id="container">
         <div id="section-one">
-            <form th:action="@{/fitness/search/exercises}" method="GET">
+            <form th:action="@{/protected/fitness/search/exercises}" method="GET">
                 <table>
 					<tr>
 						<td><label style="margin-right: 0.15cm;" for="exampleFormControlInput1" class="form-label">Date: </label></td>
@@ -154,17 +173,21 @@
                     <img th:src="@{/images/getFit.jpg}" height="428" width="428" style="margin-top: 0.3cm;">
                 </div>
                 <div class="header" th:if="${listOfExercises.size() > 0}">
-                    <h3> Great job <span th:text="${username}"></span>! You did <span th:text="${listOfExercises.size()}"></span> exercise(s) on <span th:text="${date}"></span>!</h3>
-                    <h5>Total calories burnt for the day: <span th:text="${totalCalories}"></span></h5>
+                    <h4> Great job <span th:text="${username}"></span>! You did <span th:text="${listOfExercises.size()}"></span> exercise(s) on <span th:text="${date}"></span>!</h4>
+                    <h5>Total calories burnt for the day: <span th:text="${totalCalories}"></span> kcal</h5>
                 </div>
 
                 <div class="body" th:if="${listOfExercises.size() > 0}">
                     <div class="card" th:each="ex : ${listOfExercises}">
-                        <h4>Exercise <span th:text="${exStat.index + 1}"></span>: <span th:text="${ex.title}"></span></h4>
-                        <ol>
-                            <li th:each="exSet : ${ex.individualEx}"><span th:text="${exSet.description} + ' ' + ${exSet.count} + ' ' + ${exSet.setCount} + ' ' + ${exSet.restInterval}"></span></li>
-                        </ol>
-                        <h6>Calories burnt: <span th:text="${ex.calories}"></span></h6>
+                        <h5>Exercise <span th:text="${exStat.index + 1}"></span>: <span th:text="${ex.title}"></span></h5>
+                <ol>
+                    <li th:each="exSet : ${ex.individualEx}"><span th:text="${exSet.description} + ' x ' + ${exSet.count}"></span></li>
+                </ol>
+                <div class="para">
+                    <p>Number of set: <span th:text="${ex.setCount}"></span></p>
+                    <p>Rest interval: <span th:text="${ex.restInterval}"></span> min</p>
+                </div>
+                <h6>Calories burnt: <span th:text="${ex.calories}"></span> kcal</h6>
                     </div>
                 </div>
             </div>

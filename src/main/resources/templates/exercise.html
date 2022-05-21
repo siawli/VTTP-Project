@@ -58,7 +58,6 @@
 		}
 
 		#table-two table tbody td {
-			/* border: 1px solid red; */
 			padding-right: 0.2cm;
 			padding-left: 0.2cm;
 		}
@@ -82,21 +81,18 @@
         }
 
 		.navbar-text {
-            margin-right: 0.8cm;
-            vertical-align: baseline;
             border: 1px solid green;
+			padding-left: 2.8cm;
             align-self: baseline;
+			align-items: center;
+			float:left;
+			padding:auto;
+			margin:3px;
         }
 
         .form {
-            /* border: 2px solid pink; */
             float: right;
-            /* align-items: center;
-            margin-top: 0.4cm;
-            margin-bottom: 0.3cm;
-            margin-left: 0.8cm;
-            margin-bottom: auto;
-            margin-top: auto; */
+			padding-right: 0.2cm;
         }
 
 		.center {
@@ -106,25 +102,32 @@
 
 		#nav-within {
             border: 2px solid red;
-            display: flex;
             height: 2.2cm;
+			width: 100%;
         }
+
+		#allForms {
+			border: 5px solid purple;
+			float:right;
+ 			padding-right: 2.5cm;	
+  			margin:18px;
+		}
 
 
 	</style>
 </head>
 <body>
-	<div id="nav", class="center">
-        <div id="nav-within",  class="center">
-			<!-- <div class="allForms"> -->
-				<h1 class="navbar-text"><strong>Fitness</strong></h1>
+	<div id="nav">
+        <div id="nav-within", class="center" >
+			<h1 class="navbar-text"><strong>Fitness</strong></h1>
+			<div id="allForms">
 				<form class="form">
 					<a href="/logout" class="btn btn-primary">Logout</a>      
 				</form>
 				<form class="form">
 					<a href="/protected/home" class="btn btn-primary">Home</a>      
 				</form>
-			<!-- </div> -->
+			</div>
         </div>
     </div>
 

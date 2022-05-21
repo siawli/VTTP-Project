@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,11 +33,12 @@ public class AuthenicateController {
         ModelAndView mav = new ModelAndView();
 
         UserModel user = (UserModel)sess.getAttribute("user");
+        System.out.println("AuthenicateControllerUser: " + user.getUsername());
         String username = (String)sess.getAttribute("username");
         String password = (String)sess.getAttribute("password");
 
-        user.setUsername(username);
-        user.setPassword(password);
+        // user.setUsername(username);
+        // user.setPassword(password);
 
         user = userSvc.findUserByUsernameSvc(user).get();
 
