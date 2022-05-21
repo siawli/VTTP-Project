@@ -61,7 +61,7 @@ public class RecipesControllerTest {
         try {
             this.mvc.perform(req).andExpect(redirectedUrl("/protected/recipes/search/pizza/1"));
         } catch (Exception ex) {
-            fail("fail to redirect to pagination");
+            fail("fail to redirect to pagination page");
             return;
         }
     }
