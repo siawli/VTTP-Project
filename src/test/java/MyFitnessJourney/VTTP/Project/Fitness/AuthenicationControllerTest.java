@@ -45,7 +45,8 @@ public class AuthenicationControllerTest {
             .get("/protected/home")
             .sessionAttr("user", createUser("test"))
             .sessionAttr("username", "test")
-            .sessionAttr("password", "test");
+            .sessionAttr("password", "test")
+            .sessionAttr("user", createUser("test"));
             
         try {
             this.mvc.perform(req).andExpect(content().string(containsString("Welcome")));

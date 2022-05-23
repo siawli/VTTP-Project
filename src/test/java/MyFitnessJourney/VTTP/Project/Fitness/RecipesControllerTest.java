@@ -8,6 +8,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import MyFitnessJourney.VTTP.Project.Fitness.user.UserModel;
+
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -26,7 +28,8 @@ public class RecipesControllerTest {
     @Test
     void shouldGetRecipeSearchPage() {
         RequestBuilder req = MockMvcRequestBuilders.get("/protected/recipes")
-                .accept(MediaType.TEXT_HTML_VALUE).sessionAttr("username", "test");
+                .accept(MediaType.TEXT_HTML_VALUE).sessionAttr("username", "test")
+                .sessionAttr("user", createUser("test"));
         try {
             this.mvc.perform(req).andExpect(content().string(containsString("master-chefing")));
         } catch (Exception ex) {
@@ -40,7 +43,8 @@ public class RecipesControllerTest {
         RequestBuilder req = MockMvcRequestBuilders.get("/protected/recipes")
                 .accept(MediaType.TEXT_HTML_VALUE)
                 .sessionAttr("username", "test")
-                .sessionAttr("count", "1");
+                .sessionAttr("count", "1")
+                .sessionAttr("user", createUser("test"));
         try {
             this.mvc.perform(req).andExpect(content().string(containsString("No search results available! Try another search!")));
         } catch (Exception ex) {
@@ -56,7 +60,8 @@ public class RecipesControllerTest {
             .queryParam("query", "pizza")
             .queryParam("mealTypes", "breakfast")
             .queryParam("maxCalories", "1000")
-            .sessionAttr("username", "test");
+            .sessionAttr("username", "test")
+            .sessionAttr("user", createUser("test"));
 
         try {
             this.mvc.perform(req).andExpect(redirectedUrl("/protected/recipes/search/pizza/1"));
@@ -73,7 +78,8 @@ public class RecipesControllerTest {
             .queryParam("query", "abcdef")
             .queryParam("mealTypes", "breakfast")
             .queryParam("maxCalories", "1000")
-            .sessionAttr("username", "test");
+            .sessionAttr("username", "test")
+            .sessionAttr("user", createUser("test"));
         
         try {
             this.mvc.perform(req).andExpect(redirectedUrl("/protected/recipes"));
@@ -87,7 +93,8 @@ public class RecipesControllerTest {
     void shouldGetPaginationPages() {
         RequestBuilder req = MockMvcRequestBuilders.get("/protected/recipes/search/pizza/1")
                 .sessionAttr("username", "test")
-                .accept(MediaType.TEXT_HTML_VALUE);
+                .accept(MediaType.TEXT_HTML_VALUE)
+                .sessionAttr("user", createUser("test"));
 
         try {
             this.mvc.perform(req).andExpect(content().string(containsString("pizza")));
@@ -95,6 +102,19 @@ public class RecipesControllerTest {
             fail("failed to get search results and paginated page");
             return;
         }
+    }
+
+    private UserModel createUser(String username) {
+
+        UserModel user = new UserModel();
+        user.setUsername(username);
+        user.setPassword(username);
+        user.setHeight(1.70f);
+        user.setWeight(62f);
+        user.setGoals("Get 6 packs!");
+        user.setBmi(user.getHeight(), user.getWeight());
+
+        return user;
     }
     
 }

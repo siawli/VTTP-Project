@@ -42,8 +42,9 @@ public class ExerciseControllerTest {
                 .get("/protected/fitness")
                 .accept(MediaType.TEXT_HTML_VALUE)
                 .sessionAttr("username", "test")
-                .sessionAttr("password", "test");
-
+                .sessionAttr("password", "test")
+                .sessionAttr("user", createUser("test"));
+                
         try {
             this.mvc.perform(req).andExpect(content().string(containsString("On Track to your Fitness Goals")));
         } catch (Exception ex) {
@@ -58,6 +59,7 @@ public class ExerciseControllerTest {
                 .get("/protected/fitness/search/exercises")
                 .queryParam("date", "2022-05-18")
                 .sessionAttr("username", "test")
+                .sessionAttr("user", createUser("test"))
                 .accept(MediaType.TEXT_HTML_VALUE);
 
         try {
@@ -74,7 +76,9 @@ public class ExerciseControllerTest {
             .get("/protected/fitness/search/exercises")
             .queryParam("date", "2022-05-20")
             .sessionAttr("username", "test")
-            .accept(MediaType.TEXT_HTML_VALUE);
+            .accept(MediaType.TEXT_HTML_VALUE)
+            .sessionAttr("user", createUser("test"));
+        
             
         try {
             this.mvc.perform(req).andExpect(content().string(containsString("No exercises")));
@@ -88,6 +92,7 @@ public class ExerciseControllerTest {
         RequestBuilder req = MockMvcRequestBuilders
                 .post("/protected/fitness/exercise")
                 .sessionAttr("username", "test")
+                .sessionAttr("user", createUser("test"))
                 .params(createMVM())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED);
 

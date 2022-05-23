@@ -13,6 +13,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Component;
 
+import MyFitnessJourney.VTTP.Project.Fitness.user.UserModel;
+
 @Component
 public class AuthenticationFilter implements Filter{
 
@@ -28,7 +30,9 @@ public class AuthenticationFilter implements Filter{
         // System.out.println(">>>> requested url: " + httpReq.getRequestURL().toString());
         // System.out.println(">>>> httpResp: " + httpResp.toString());
         // System.out.println(">>>> username: " + username);
-        
+        UserModel user = (UserModel)sess.getAttribute("user");
+        System.out.println(">>>> user: " + user.getUsername());
+
         if ((username == null) || (username.trim().length() <= 0)) {
             httpResp.sendRedirect("/");
             return;

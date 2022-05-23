@@ -44,8 +44,9 @@ public class HealthyControllerTest {
         RequestBuilder req = MockMvcRequestBuilders.get("/")
                 .accept(MediaType.TEXT_HTML_VALUE)
                 .sessionAttr("username", "test")
-                .sessionAttr("countLogin", "");
-
+                .sessionAttr("countLogin", "")
+                .sessionAttr("user", createUser("test"));
+                
         try {
             this.mvc.perform(req).andExpect(content().string(containsString("Login")));
         } catch (Exception ex) {
@@ -60,8 +61,9 @@ public class HealthyControllerTest {
         RequestBuilder req = MockMvcRequestBuilders.get("/signUp")
                 .accept(MediaType.TEXT_HTML_VALUE)
                 .sessionAttr("username", "test")
-                .sessionAttr("countSignUp", "");
-
+                .sessionAttr("countSignUp", "")
+                .sessionAttr("user", createUser("test"));
+                
         try {
             this.mvc.perform(req).andExpect(content().string(containsString("Sign Up")));
         } catch (Exception ex) {
@@ -76,8 +78,9 @@ public class HealthyControllerTest {
             .accept(MediaType.TEXT_HTML_VALUE)
             .param("home", "login")
             .flashAttr("user", createUser("tommy"))
-            .sessionAttr("username", "tommy");
-
+            .sessionAttr("username", "tommy")
+            .sessionAttr("user", createUser("test"));
+            
         try {
             mvc
             .perform(req)
@@ -96,8 +99,9 @@ public class HealthyControllerTest {
         .accept(MediaType.TEXT_HTML_VALUE)
         .queryParam("home", "login")
         .flashAttr("user", createUser("test"))
-        .sessionAttr("username", "test");
-        
+        .sessionAttr("username", "test")
+        .sessionAttr("user", createUser("test"));
+                
         try {
             mvc
             .perform(req)
@@ -114,8 +118,9 @@ public class HealthyControllerTest {
             .accept(MediaType.TEXT_HTML_VALUE)
             .param("home", "signUp")
             .flashAttr("user", createUser("test"))
-            .sessionAttr("username", "test");
-
+            .sessionAttr("username", "test")
+            .sessionAttr("user", createUser("test"));
+            
         try {
             mvc
             .perform(req)
@@ -132,8 +137,9 @@ public class HealthyControllerTest {
         .accept(MediaType.TEXT_HTML_VALUE)
         .param("home", "signUp")
         .flashAttr("user", createUser("test2"))
-        .sessionAttr("username", "test2");
-
+        .sessionAttr("username", "test2")
+        .sessionAttr("user", createUser("test"));
+        
         try {
             mvc
             .perform(req)
@@ -150,7 +156,9 @@ public class HealthyControllerTest {
     @Test
     void shouldLogout() {
         RequestBuilder req = MockMvcRequestBuilders.get("/logout")
-            .sessionAttr("username", "test");
+            .sessionAttr("username", "test")
+            .sessionAttr("user", createUser("test"));
+            
         try {
             this.mvc.perform(req).andExpect(redirectedUrl("/"));
         } catch (Exception ex) {
