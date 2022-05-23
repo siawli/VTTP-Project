@@ -19,14 +19,14 @@ import jakarta.json.JsonValue;
 @Service
 public class RecipesService {
 
-    // @Value("${eda.app.id}")
-    // private String appId;
+    @Value("${eda.app.id}")
+    private String appId;
 
-    // @Value("${eda.app.key}")
-    // private String appKey;
+    @Value("${eda.app.key}")
+    private String appKey;
 
-    private static final String appId = System.getenv("EDA_APP_ID");
-    private static final String appKey = System.getenv("EDA_APP_KEY");
+    // private static final String appId = System.getenv("EDA_APP_ID");
+    // private static final String appKey = System.getenv("EDA_APP_KEY");
     public List<RecipesModel> listOfRecipes = new LinkedList<>();
     
     final String DEFAULT_URL = "https://api.edamam.com/api/recipes/v2";

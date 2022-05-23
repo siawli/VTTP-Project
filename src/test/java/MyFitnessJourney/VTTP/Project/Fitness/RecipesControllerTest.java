@@ -31,7 +31,7 @@ public class RecipesControllerTest {
                 .accept(MediaType.TEXT_HTML_VALUE).sessionAttr("username", "test")
                 .sessionAttr("user", createUser("test"));
         try {
-            this.mvc.perform(req).andExpect(content().string(containsString("master-chefing")));
+            this.mvc.perform(req).andExpect(content().string(containsString("chefing")));
         } catch (Exception ex) {
             fail("fail to get recipes search page");
             return;
