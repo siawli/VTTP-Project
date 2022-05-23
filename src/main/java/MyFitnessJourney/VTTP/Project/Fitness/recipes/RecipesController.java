@@ -64,6 +64,7 @@ public class RecipesController {
 
         if (listRecipesToShowOpt.isEmpty()) {
             mav.setViewName("error");
+            mav.setStatus(HttpStatus.NOT_FOUND);
             return mav;
         }
 
