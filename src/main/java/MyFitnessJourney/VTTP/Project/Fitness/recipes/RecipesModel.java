@@ -10,7 +10,14 @@ public class RecipesModel {
     private int calories;
     private String image;
     private String url;
+    private int yield;
     
+    public int getYield() {
+        return yield;
+    }
+    public void setYield(int yield) {
+        this.yield = yield;
+    }
     public String getUrl() {
         return url;
     }

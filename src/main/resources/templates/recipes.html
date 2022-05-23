@@ -102,6 +102,7 @@
 			-moz-background-size: cover;
 			-o-background-size: cover;
 			background-size: cover;
+            min-height: 20cm;
         }
 
         .center1 {
@@ -164,7 +165,8 @@
             <div id="recipe-sub-two">
                 <div class="center">
                     <img th:src="@{${recipe.image}}" height="200" width="200">
-                    <p style="text-align: center;"><strong>Calories: <span th:text="${recipe.calories}"></span></strong></p>
+                    <p style="text-align: center;"><strong>Calories: <span th:text="${recipe.calories}"></span> kcal/serving</strong></p>
+                    <p style="text-align: center;"><span th:text="${recipe.yield}"></span> serving(s)</p>
                     <p style="text-align: center;"><a th:href="@{${recipe.url}}" target="_blank">Recipe instructions</a></p>
                 </div>
             </div>

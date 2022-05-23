@@ -1,0 +1,15 @@
+# name: Deploy to Heroku
+# on: 
+#   push:
+# jobs:
+#   deploy_to_heroku:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: Checkout src 
+#       uses: actions/checkout@v2
+#     - name: deploy
+#       uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+#       with:
+#         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+#         heroku_app_name: "vttp-project-healthy" #Must be unique in Heroku
+#         heroku_email: ${{secrets.email}}

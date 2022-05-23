@@ -19,19 +19,30 @@ public class RecipeSvcTest {
     private RecipesService recipeSvc;
 
     @Test
-    void shouldReturnNonEmptyList() {
-
+    void shouldReturnNonEmptyListWithCorrectPagination() {
         Optional<List<RecipesModel>> listRecipes 
-            = recipeSvc.getRecipes("pizza", "Breakfast", 1000000);
+            = recipeSvc.getRecipes("brownie", "Snack", 50);
         assertTrue(listRecipes.isPresent());
+        assertTrue(recipeSvc.pagination(1).get().size() < 10);
+        assertTrue(recipeSvc.pagination(4).isEmpty());
     }
 
     @Test
     void shouldReturnEmptyList() {
-
         Optional<List<RecipesModel>> listRecipes 
             = recipeSvc.getRecipes("abcdefg", "Breakfast", 1000000);
         assertTrue(listRecipes.isEmpty());
     }
-    
+
+    // @Test
+    // void shouldGetCorrectPaginationWithRespectivePage() {
+    //     Optional<List<RecipesModel>> listRecipes 
+    //         = recipeSvc.getRecipes("brownie", "Snack", 50);
+    //     // this call would only return 2 result
+    //     assertTrue(recipeSvc.pagination(1).get().size() < 10);
+
+    //     assertTrue(recipeSvc.pagination(4).isEmpty());
+
+    // }
+
 }

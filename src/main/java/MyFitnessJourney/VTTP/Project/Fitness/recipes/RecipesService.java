@@ -81,6 +81,9 @@ public class RecipesService {
                 
                 JsonObject recipeDetails = recipe.asJsonObject().getJsonObject("recipe");
                 indivRecipe.setLabel(recipeDetails.getString("label"));
+                indivRecipe.setYield(recipeDetails.getInt("yield"));
+
+                indivRecipe.setCalories(recipeDetails.getInt("calories")/indivRecipe.getYield());
 
                 indivRecipe.setUrl(recipeDetails.getString("url"));
 
@@ -92,9 +95,6 @@ public class RecipesService {
                 for (JsonValue ingredientLine : ingredientLines) {
                     indivRecipe.addIngredientLine(ingredientLine.toString().replace("\"", ""));
                 }
-
-                JsonObject totalDaily = recipeDetails.getJsonObject("totalDaily").getJsonObject("ENERC_KCAL");
-                indivRecipe.setCalories(totalDaily.getInt("quantity"));
 
                 listOfRecipes.add(indivRecipe);
             }
@@ -108,7 +108,7 @@ public class RecipesService {
 
             count = listOfRecipes.size();
         }
-
+        System.out.println(">>>> size: " + listOfRecipes.size());
         return Optional.of(listOfRecipes);
     }
 
@@ -117,13 +117,12 @@ public class RecipesService {
     }
 
     public Optional<List<RecipesModel>> pagination(int page) {
-
         if (listOfRecipes.size() > page*10) {
             return Optional.of(listOfRecipes.subList(page*10-10, page*10));
-        } else if (listOfRecipes.size() < page*10) {
-            return Optional.empty();
-        } else {
+        } else if (page*10 - listOfRecipes.size() <= 10) {
             return Optional.of(listOfRecipes.subList(page*10-10, listOfRecipes.size()));
+        } else {
+            return Optional.empty();
         }
     }
 
