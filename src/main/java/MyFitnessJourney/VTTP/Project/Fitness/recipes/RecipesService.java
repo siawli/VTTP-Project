@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -18,8 +19,14 @@ import jakarta.json.JsonValue;
 @Service
 public class RecipesService {
 
-    private static final String appId = System.getenv("EDA_APP_ID");
-    private static final String appKey = System.getenv("EDA_APP_KEY");
+    @Value("${eda.app.id}")
+    private String appId;
+
+    @Value("${eda.app.key}")
+    private String appKey;
+
+    // private static final String appId = System.getenv("EDA_APP_ID");
+    // private static final String appKey = System.getenv("EDA_APP_KEY");
     public List<RecipesModel> listOfRecipes = new LinkedList<>();
     
     final String DEFAULT_URL = "https://api.edamam.com/api/recipes/v2";
