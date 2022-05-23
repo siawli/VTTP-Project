@@ -59,8 +59,6 @@ public class ExerciseService {
                 ex.setRestInterval(result.getString("set_rest_interval"));
                 ex.setSetCount(result.getInt("set_count"));
 
-                
-                int count = 1;
                 while (timestamp.equals(result.getString("exercise_time"))) {
                     // System.out.println("count: " + count);
                     ExcerciseSet exSet = new ExcerciseSet();
@@ -71,7 +69,6 @@ public class ExerciseService {
 
                     ex.getIndividualEx().add(exSet);
                     
-                    count++;
                     if (!result.next()) {
                         break;
                     }

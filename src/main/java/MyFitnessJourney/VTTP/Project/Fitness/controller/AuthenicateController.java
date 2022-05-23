@@ -3,7 +3,6 @@ package MyFitnessJourney.VTTP.Project.Fitness.controller;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
