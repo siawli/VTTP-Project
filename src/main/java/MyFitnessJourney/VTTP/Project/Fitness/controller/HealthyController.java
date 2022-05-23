@@ -18,16 +18,8 @@ import MyFitnessJourney.VTTP.Project.Fitness.user.UserService;
 @Controller
 public class HealthyController {
 
-    private static int countSignUp = 0;
-    private static int countLogin = 0;
-
     @Autowired
     private UserService userSvc;
-
-    /*
-    wah not sure is it because haven't learn frontend, but it was so difficult to redirect to the same page and handling the GET vs POST request!!! That's why I have 'count' to see whether the redirection is due to a GET (refresh on page or redirected from login) vs whether it was redirected from the controller due to the error thrown when username is not found/incorrect.
-    */
-
 
     @GetMapping()
     public ModelAndView login(HttpSession sess) {

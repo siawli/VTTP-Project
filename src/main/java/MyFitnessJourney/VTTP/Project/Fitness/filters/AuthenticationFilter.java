@@ -31,9 +31,9 @@ public class AuthenticationFilter implements Filter{
         // System.out.println(">>>> httpResp: " + httpResp.toString());
         // System.out.println(">>>> username: " + username);
         UserModel user = (UserModel)sess.getAttribute("user");
-        System.out.println(">>>> user: " + user.getUsername());
+        // System.out.println(">>>> user: " + user.getUsername());
 
-        if ((username == null) || (username.trim().length() <= 0)) {
+        if ((username == null) || (username.trim().length() <= 0) || user.getUsername() == null) {
             httpResp.sendRedirect("/");
             return;
         }

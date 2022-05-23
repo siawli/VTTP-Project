@@ -35,7 +35,7 @@ public class ExerciseController {
     @PostMapping("/exercise")
     public ModelAndView logExercise(@RequestBody MultiValueMap<String, String> form, HttpSession sess) {
 
-        System.out.println(">>>> form: " + form.toString());
+        // System.out.println(">>>> form: " + form.toString());
         ModelAndView mav = new ModelAndView();
         String username = (String)sess.getAttribute("username");
 
@@ -49,7 +49,7 @@ public class ExerciseController {
         }
 
         Optional<List<Exercise>> listExOpt = exSvc.getAllEx(username, form.getFirst("date"));
-        System.out.println(">>>>> list present? : " + listExOpt.isPresent());
+        // System.out.println(">>>>> list present? : " + listExOpt.isPresent());
 
         List<Exercise> listEx = listExOpt.get();
         int totalCalPerDay = 0;

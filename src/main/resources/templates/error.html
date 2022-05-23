@@ -1,13 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Error</title>
+    <style>
+        .container {
+            /* border: 1px solid blue; */
+            justify-content: center;
+            align-items: center;
+            display: flex;
+        }
+
+        img {
+            /* border: 1px solid red; */
+            justify-content: center;
+            align-items: center;
+        }
+
+    </style>
 </head>
 <body>
     <h2 style="text-align: center;">Error!</h2>
-    <img style="justify-content: center;" src="@{/images/error.jpg}">
+    <div class="container">
+        <!-- <h2 style="text-align: center;">Error!</h2> -->
+        <img style="align-items: center;" th:src="@{/images/error.jpg}">
+    </div>
 </body>
 </html>

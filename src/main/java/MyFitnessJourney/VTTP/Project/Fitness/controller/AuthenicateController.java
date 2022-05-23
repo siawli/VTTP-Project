@@ -33,13 +33,10 @@ public class AuthenicateController {
         ModelAndView mav = new ModelAndView();
 
         UserModel user = (UserModel)sess.getAttribute("user");
-        System.out.println("AuthenicateControllerUser: " + user.getUsername());
+        // System.out.println("AuthenicateControllerUser: " + user.getUsername());
         String username = (String)sess.getAttribute("username");
         String password = (String)sess.getAttribute("password");
-
-        // user.setUsername(username);
-        // user.setPassword(password);
-
+        
         user = userSvc.findUserByUsernameSvc(user).get();
 
         mav.setViewName("homePage");

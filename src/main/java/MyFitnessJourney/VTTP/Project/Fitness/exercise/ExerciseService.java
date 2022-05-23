@@ -48,7 +48,7 @@ public class ExerciseService {
             SqlRowSet result = exercisesOpt.get();
 
             while (result.next()) {
-                System.out.println(">>>> result.next() 1 == true; " + result.getString("exercise_time"));
+                // System.out.println(">>>> result.next() 1 == true; " + result.getString("exercise_time"));
                 timestamp = result.getString("exercise_time");
 
                 Exercise ex = new Exercise();
@@ -62,7 +62,7 @@ public class ExerciseService {
                 
                 int count = 1;
                 while (timestamp.equals(result.getString("exercise_time"))) {
-                    System.out.println("count: " + count);
+                    // System.out.println("count: " + count);
                     ExcerciseSet exSet = new ExcerciseSet();
                     exSet.setCount(result.getString("step_count"));
                     exSet.setDescription(result.getString("step_description"));
