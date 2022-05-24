@@ -74,11 +74,11 @@ public class RecipesController {
         mav.addObject("startPage", page + 1);
         mav.addObject("backPage", page-1);
         mav.addObject("query", query);
-        System.out.println(">>>> size in controller: " + recipeSvc.getListRecipes().size());
-        System.out.println(">>>>>> page: " + page);
+        // System.out.println(">>>> size in controller: " + recipeSvc.getListRecipes().size());
+        // System.out.println(">>>>>> page: " + page);
 
         int leftover = recipeSvc.getListRecipes().size() - page*10;
-        if (leftover < 0 ) {
+        if (leftover <= 0 ) {
             mav.addObject("showNextPageBtn", false);
         } else {
             mav.addObject("showNextPageBtn", true);
