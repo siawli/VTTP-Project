@@ -5,8 +5,11 @@
 ![Coverage](https://paf-siawli.sgp1.digitaloceanspaces.com/coverage/VTTP-Project/jacoco.svg?branch=main&service=github)
 
 A web application to promote healthy living by allowing users to search for healthy recipes and track their fitness!
+
 Link: https://vttp-project-healthy.herokuapp.com/
 
 For Testing Purpose
+
 Username: user
+
 Password: user
