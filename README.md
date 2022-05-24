@@ -3,6 +3,6 @@
 A web application to promote healthy living by allowing users to search for healthy recipes and track their fitness!
 ### Link: https://vttp-project-healthy.herokuapp.com/
 
-### For Testing
+### For Testing Purpose
 - Username: user
 - Password: user
